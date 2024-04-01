@@ -2,8 +2,6 @@ import { Controller, Get, Post, Body, ConflictException, UnauthorizedException, 
 import { StaffService } from './staff.service';
 import * as bcrypt from 'bcryptjs';
 
-
-
 @Controller('staff')
 export class StaffController {
   constructor(private readonly staffService: StaffService) {}
@@ -30,15 +28,12 @@ export class StaffController {
   throw new UnauthorizedException('Credenciales incorrectas');
 }
 
-if(user.nombre == nombre || user.contraseña == contraseña) {
-  return { message: 'Acceso identificado. Hola ' + nombre}
+if (user) {
+  const passwordMatch = await bcrypt.compare(contraseña, user.contraseña);
+   if (passwordMatch) {
+    return { success: true, user: { nombre: user.nombre, cargo: user.cargo } };
+  }
 }
-  // if (user) {
-  //   const passwordMatch = await bcrypt.compare(contraseña, user.contraseña);
-  //   if (passwordMatch) {
-  //     return { success: true, user };
-  //   }
-  // }
 
   throw new UnauthorizedException('Credenciales incorrectas');
 }

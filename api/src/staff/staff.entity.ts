@@ -1,4 +1,5 @@
-import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column, OneToMany } from 'typeorm';
+import { Repo } from '../repo/repo.entity';
 
 @Entity()
 export class Staff {
@@ -16,6 +17,9 @@ export class Staff {
 
   @Column()
   contraseña: string;
+
+  @OneToMany(() => Repo, repo => repo.autor)
+  repos: Repo[];
 
 }
 

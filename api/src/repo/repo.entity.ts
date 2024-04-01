@@ -1,4 +1,5 @@
-import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column, ManyToOne } from 'typeorm';
+import { Staff } from '../staff/staff.entity'
 
 @Entity()
 export class Repo {
@@ -17,8 +18,8 @@ export class Repo {
   @Column('date')
   fechaFinalizacion: Date;
 
-  @Column()
-  autor: string;
+  @ManyToOne(() => Staff, staff => staff.repos)
+  autor: Staff;
 
   @Column()
   colaboradores: string;
