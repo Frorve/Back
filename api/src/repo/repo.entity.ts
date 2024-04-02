@@ -23,5 +23,8 @@ export class Repo {
 
   @Column()
   colaboradores: string;
+
+  @Column('bytea', { nullable: true })
+  archivo: Buffer;
 }
 
