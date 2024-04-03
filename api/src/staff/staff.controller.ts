@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, ConflictException, UnauthorizedException, HttpCode, HttpStatus } from '@nestjs/common';
+import { Controller, Get, Post, Body, ConflictException, UnauthorizedException, HttpCode, HttpStatus, Query } from '@nestjs/common';
 import { StaffService } from './staff.service';
 import * as bcrypt from 'bcryptjs';
 
@@ -36,6 +36,17 @@ if (user) {
 }
 
   throw new UnauthorizedException('Credenciales incorrectas');
+}
+
+@Get('search')
+async searchStaff(@Query('query') query: string) {
+  try {
+    const users = await this.staffService.searchStaff(query);
+    return users;
+  } catch (error) {
+    console.error('Error al buscar usuarios:', error);
+    throw new Error('Error al buscar usuarios');
+  }
 }
 
   @Get()

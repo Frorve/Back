@@ -27,6 +27,13 @@ export class StaffService {
     return this.staffRepository.find();
   }
 
+  async searchStaff(query: string): Promise<Staff[]> {
+    // Buscar usuarios que coincidan con el nombre o el correo electrónico
+    return this.staffRepository.createQueryBuilder('staff')
+      .where('staff.nombre LIKE :query OR staff.correoElectronico LIKE :query', { query: `%${query}%` })
+      .getMany();
+  }
+
   async findByUsername(nombre: string): Promise<Staff> {
     return this.staffRepository.findOne({ where: { nombre } });
   }
