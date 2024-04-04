@@ -18,8 +18,5 @@ export class Staff {
   @Column()
   contraseña: string;
 
-  @OneToMany(() => Repo, repo => repo.autor)
-  repos: Repo[];
-
 }
 

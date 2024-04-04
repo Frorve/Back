@@ -3,7 +3,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { FindOneOptions, Repository } from 'typeorm';
 import { Repo } from './repo.entity';
 import { Staff } from '../staff/staff.entity';
-import { Multer } from "multer"
+import { Multer } from "multer";
 
 @Injectable()
 export class RepoService {
@@ -12,7 +12,7 @@ export class RepoService {
     private readonly repoRepository: Repository<Repo>,
   ) {}
 
-  async createRepo(nombreProyecto: string, descripcion: string, fechaInicio: Date, fechaFinalizacion: Date, autor: Staff, colaboradores: string, archivo?: Express.Multer.File): Promise<Repo> {
+  async createRepo(nombreProyecto: string, descripcion: string, fechaInicio: Date, fechaFinalizacion: Date, autor: string, colaboradores: string, archivo?: Express.Multer.File ): Promise<Repo> {
     const repo = new Repo();
     repo.nombreProyecto = nombreProyecto;
     repo.descripcion = descripcion;
@@ -24,12 +24,13 @@ export class RepoService {
     if (archivo) {
       repo.archivo = archivo.buffer;
     }
-    
-    return this.repoRepository.save(repo);
+
+    const savedRepo = await this.repoRepository.save(repo);
+
+    return savedRepo;
   }
 
-
-  async getRepoByAutor(autor: Staff): Promise<Repo[]> {
+  async getRepoByAutor(autor: string): Promise<Repo[]> {
     return this.repoRepository.find({ where: { autor } });
   }
   
@@ -42,8 +43,8 @@ export class RepoService {
   }
 
   async getRepoById(id: number): Promise<Repo | undefined> {
-    const options: FindOneOptions<Repo> = { where: { id } }; // Crear opciones de búsqueda
-    return this.repoRepository.findOne(options); // Pasar las opciones a findOne
+    const options: FindOneOptions<Repo> = { where: { id } };
+    return this.repoRepository.findOne(options);
   }
 
   async updateRepo(id: number, nombreProyecto: string, descripcion: string, colaboradores: string): Promise<Repo> {
@@ -61,7 +62,4 @@ export class RepoService {
     return this.repoRepository.save(repo);
   }
   
-  
-
 }
-

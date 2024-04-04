@@ -1,5 +1,4 @@
-import { Entity, PrimaryGeneratedColumn, Column, ManyToOne } from 'typeorm';
-import { Staff } from '../staff/staff.entity'
+import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, OneToMany } from 'typeorm';
 
 @Entity()
 export class Repo {
@@ -18,13 +17,14 @@ export class Repo {
   @Column('date')
   fechaFinalizacion: Date;
 
-  @ManyToOne(() => Staff, staff => staff.repos)
-  autor: Staff;
-
   @Column()
   colaboradores: string;
 
   @Column('bytea', { nullable: true })
   archivo: Buffer;
+
+  @Column({ nullable: true })
+  autor: string;
+  
 }
 

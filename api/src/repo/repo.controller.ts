@@ -12,8 +12,7 @@ export class RepoController {
 
   @Post()
   @UseInterceptors(FileInterceptor('archivo'))
-  createRepo(@Req() req, @Body() { nombreProyecto, descripcion, fechaInicio, fechaFinalizacion, colaboradores }: { nombreProyecto: string; descripcion: string, fechaInicio: Date, fechaFinalizacion: Date, colaboradores:string }, @UploadedFile() archivo: Express.Multer.File) {
-    const autor: Staff = req.user;
+  createRepo(@Body() { nombreProyecto, descripcion, fechaInicio, fechaFinalizacion, colaboradores, autor }: { nombreProyecto: string; descripcion: string, fechaInicio: Date, fechaFinalizacion: Date, colaboradores:string, autor: string }, @UploadedFile() archivo: Express.Multer.File) {
     return this.repoService.createRepo(nombreProyecto, descripcion, fechaInicio, fechaFinalizacion, autor, colaboradores, archivo);
   }
 
@@ -24,9 +23,13 @@ export class RepoController {
   }
 
   @Get()
-  getAllRepo(@Req() req) {
-    const autor: Staff = req.user;
-    return this.repoService.getRepoByAutor(autor);
+  getAllRepo() {
+    return this.repoService.getAllRepo();
+  }
+
+  @Get('search/:id')
+  getRepoById(@Param('id') id: number) {
+    return this.repoService.getRepoById(id);
   }
 
   @Put(':id')
@@ -34,7 +37,6 @@ export class RepoController {
   updateRepo(@Param('id') id: string, @Body() { nombreProyecto, descripcion, colaboradores }: { nombreProyecto: string; descripcion: string, colaboradores:string }, @UploadedFile() archivo: Express.Multer.File) {
     return this.repoService.updateRepo(+id, nombreProyecto, descripcion, colaboradores);
   }
-
 
   @Delete(':id')
   deleteRepo(@Param('id') id: string) {
