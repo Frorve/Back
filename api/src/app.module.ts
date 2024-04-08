@@ -6,6 +6,8 @@ import { StaffController } from './staff/staff.controller';
 import { Repo } from './repo/repo.entity';
 import { RepoService } from './repo/repo.service';
 import { RepoController } from './repo/repo.controller';
+import { AuthController } from './auth/auth.controller';
+import { AuthService } from './auth/auth.service';
 
 
 @Module({
@@ -23,8 +25,8 @@ import { RepoController } from './repo/repo.controller';
     TypeOrmModule.forFeature([Staff, Repo]),
     
   ],
-  providers: [StaffService, RepoService],
-  controllers: [StaffController, RepoController],
+  providers: [StaffService, RepoService, AuthService],
+  controllers: [StaffController, RepoController, AuthController],
 })
 
 export class AppModule {}
