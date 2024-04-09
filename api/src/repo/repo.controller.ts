@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Delete, Param, Req, UseInterceptors, UploadedFile, Res, Put } from '@nestjs/common';
+import { Controller, Get, Post, Body, Delete, Param, Req, UseInterceptors, UploadedFile, Res, Put, UseGuards } from '@nestjs/common';
 import { RepoService } from './repo.service';
 import { Repo } from './repo.entity';
 import { Staff } from '../staff/staff.entity';
@@ -17,8 +17,8 @@ export class RepoController {
   @ApiResponse({ status: 201, description: 'Repositorio creado exitosamente' })
   @ApiBody({ type: Repo })
   @UseInterceptors(FileInterceptor('archivo'))
-  createRepo(@Body() { nombreProyecto, descripcion, fechaInicio, fechaFinalizacion, colaboradores, autor }: { nombreProyecto: string; descripcion: string, fechaInicio: Date, fechaFinalizacion: Date, colaboradores:string, autor: string }, @UploadedFile() archivo: Express.Multer.File) {
-    return this.repoService.createRepo(nombreProyecto, descripcion, fechaInicio, fechaFinalizacion, autor, colaboradores, archivo);
+  createRepo(@Body() { nombreProyecto, descripcion, currentUser, fechaInicio, fechaFinalizacion, colaboradores, autor }: { nombreProyecto: string, descripcion: string, currentUser: Staff, fechaInicio: Date, fechaFinalizacion: Date, colaboradores:string, autor: string }, @UploadedFile() archivo: Express.Multer.File) {
+    return this.repoService.createRepo(nombreProyecto, descripcion, currentUser, fechaInicio, fechaFinalizacion, autor, colaboradores, archivo);
   }
 
   @Get(':id')
@@ -31,8 +31,9 @@ export class RepoController {
   @Get()
   @ApiOperation({ summary: 'Obtener todos los repositorios' })
   @ApiResponse({ status: 200, description: 'Repositorios encontrados', type: [Repo] })
-  getAllRepo() {
-    return this.repoService.getAllRepo();
+  async getAllRepo(@Req() req): Promise<Repo[]> {
+    const currentUser: Staff = req.user; // Suponiendo que el usuario actual se encuentra en el objeto de solicitud (req)
+    return this.repoService.getReposByUser(currentUser);
   }
 
   @Get('search/:id')

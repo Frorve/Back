@@ -25,6 +25,8 @@ export class Staff {
   @ApiProperty({ description: 'Contraseña del personal' })
   contraseña: string;
   
+  @OneToMany(() => Repo, (repos) => repos.createdBy)
+  repos: Repo[];
 }
 
 

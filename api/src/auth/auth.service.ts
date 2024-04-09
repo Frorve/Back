@@ -28,7 +28,7 @@ export class AuthService {
     if (!passwordMatch) {
       throw new UnauthorizedException('Credenciales incorrectas');
     }
-    const token = jwt.sign({ nombre: user.nombre, cargo: user.cargo }, this.JWT_SECRET, { expiresIn: '1h' }); // Cambia el tiempo de expiración según tus necesidades
+    const token = jwt.sign({ nombre: user.nombre, cargo: user.cargo }, this.JWT_SECRET, { expiresIn: '300h' });
     return token;
   }
 

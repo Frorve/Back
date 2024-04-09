@@ -1,5 +1,6 @@
-import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column, ManyToOne } from 'typeorm';
 import { ApiProperty, ApiTags } from '@nestjs/swagger';
+import { Staff } from 'src/staff/staff.entity';
 
 @Entity()
 @ApiTags('repo')
@@ -35,6 +36,9 @@ export class Repo {
   @Column({ nullable: true })
   @ApiProperty({ description: 'Nombre del autor del repositorio' })
   autor: string;
+
+  @ManyToOne(() => Staff, (staff) => staff.repos)
+  createdBy: Staff;
 }
 
 

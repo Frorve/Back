@@ -47,4 +47,14 @@ export class StaffService {
   async findByUsername(nombre: string): Promise<Staff> {
     return this.staffRepository.findOne({ where: { nombre } });
   }
+
+  @ApiOperation({ summary: 'Obtener todos los usuarios' })
+  @ApiResponse({ status: 200, description: 'Lista de usuarios', type: [Staff] })
+  async getOneStaff(currentUser: Staff): Promise<Staff[]> {
+    return await this.staffRepository.find({
+      where: { id: currentUser.id },
+      relations: ['repos'],
+    });
+  }
+  
 }

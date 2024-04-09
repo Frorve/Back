@@ -19,6 +19,7 @@ export class RepoService {
   async createRepo(
     nombreProyecto: string,
     descripcion: string,
+    currentUser: Staff,
     fechaInicio: Date,
     fechaFinalizacion: Date,
     autor: string,
@@ -28,6 +29,7 @@ export class RepoService {
     const repo = new Repo();
     repo.nombreProyecto = nombreProyecto;
     repo.descripcion = descripcion;
+    repo.createdBy = currentUser;
     repo.fechaInicio = fechaInicio;
     repo.fechaFinalizacion = fechaFinalizacion;
     repo.autor = autor;
@@ -91,4 +93,12 @@ export class RepoService {
 
     return this.repoRepository.save(repo);
   }
+  
+  @ApiOperation({ summary: 'Obtener cada repositorio que ha creado cada usuario' })
+  @ApiResponse({ status: 200, description: 'Lista de usuarios y sus repositorios', type: [Staff] })
+  async getReposByUser(user: Staff): Promise<Repo[]> {
+    return await this.repoRepository.find({where: { createdBy: user },
+    });
+  }
+
 }
