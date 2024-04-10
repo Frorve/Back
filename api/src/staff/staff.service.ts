@@ -4,6 +4,7 @@ import { Repository } from 'typeorm';
 import { Staff } from './staff.entity';
 import * as bcrypt from 'bcryptjs';
 import { ApiTags, ApiOperation, ApiResponse, ApiConflictResponse, ApiBody } from '@nestjs/swagger';
+import { CreateStaffDto } from 'src/dto/create-staff.dto';
 
 @Injectable()
 @ApiTags('Staff')
