@@ -1,6 +1,5 @@
-import { Entity, PrimaryGeneratedColumn, Column, OneToMany } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm';
 import { ApiProperty, ApiTags } from '@nestjs/swagger';
-import { Repo } from '../repo/repo.entity';
 
 @Entity()
 @ApiTags('Staff')
@@ -25,8 +24,6 @@ export class Staff {
   @ApiProperty({ description: 'Contraseña del personal' })
   contraseña: string;
   
-  @OneToMany(() => Repo, (repos) => repos.createdBy)
-  repos: Repo[];
 }
 
 

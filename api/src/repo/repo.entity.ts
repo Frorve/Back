@@ -37,8 +37,6 @@ export class Repo {
   @ApiProperty({ description: 'Nombre del autor del repositorio' })
   autor: string;
 
-  @ManyToOne(() => Staff, (staff) => staff.repos)
-  createdBy: Staff;
 }
 
 
