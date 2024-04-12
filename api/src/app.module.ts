@@ -8,6 +8,9 @@ import { RepoService } from './repo/repo.service';
 import { RepoController } from './repo/repo.controller';
 import { AuthController } from './auth/auth.controller';
 import { AuthService } from './auth/auth.service';
+import { StaffRepo } from './staff-repo/staff-repo.entity';
+import { StaffRepoController } from './staff-repo/staff-repo.controller';
+import { StaffRepoService } from './staff-repo/staff-repo.service';
 
 
 @Module({
@@ -19,14 +22,14 @@ import { AuthService } from './auth/auth.service';
       username: 'user',
       password: 'password',
       database: 'postgres',
-      entities: [Staff, Repo],
+      entities: [Staff, Repo, StaffRepo],
       synchronize: true,
     }),
-    TypeOrmModule.forFeature([Staff, Repo]),
+    TypeOrmModule.forFeature([Staff, Repo, StaffRepo]),
     
   ],
-  providers: [StaffService, RepoService, AuthService],
-  controllers: [StaffController, RepoController, AuthController],
+  providers: [StaffService, RepoService, AuthService, StaffRepoService],
+  controllers: [StaffController, RepoController, AuthController, StaffRepoController],
 })
 
 export class AppModule {}

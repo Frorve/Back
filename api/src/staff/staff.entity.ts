@@ -1,29 +1,30 @@
-import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm';
-import { ApiProperty, ApiTags } from '@nestjs/swagger';
+import { Entity, PrimaryGeneratedColumn, Column, OneToMany } from "typeorm";
+import { ApiProperty, ApiTags } from "@nestjs/swagger";
+import { StaffRepo } from "../staff-repo/staff-repo.entity";
 
 @Entity()
-@ApiTags('Staff')
+@ApiTags("Staff")
 export class Staff {
   @PrimaryGeneratedColumn()
-  @ApiProperty({ description: 'Identificador único del personal' })
+  @ApiProperty({ description: "Identificador único del personal" })
   id: number;
 
   @Column()
-  @ApiProperty({ description: 'Nombre del personal' })
+  @ApiProperty({ description: "Nombre del personal" })
   nombre: string;
 
   @Column()
-  @ApiProperty({ description: 'Cargo del personal' })
+  @ApiProperty({ description: "Cargo del personal" })
   cargo: string;
 
   @Column()
-  @ApiProperty({ description: 'Correo electrónico del personal' })
+  @ApiProperty({ description: "Correo electrónico del personal" })
   correoElectronico: string;
 
   @Column()
-  @ApiProperty({ description: 'Contraseña del personal' })
+  @ApiProperty({ description: "Contraseña del personal" })
   contraseña: string;
-  
+
+  @OneToMany(() => StaffRepo, (staffRepo) => staffRepo.staff)
+  staffRepos: StaffRepo[];
 }
-
-

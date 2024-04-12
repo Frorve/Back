@@ -1,30 +1,35 @@
-import { Injectable } from '@nestjs/common';
-import { InjectRepository } from '@nestjs/typeorm';
-import { FindOneOptions, Repository } from 'typeorm';
-import { Repo } from './repo.entity';
-import { Staff } from '../staff/staff.entity';
-import { ApiBody, ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
+import { Injectable } from "@nestjs/common";
+import { InjectRepository } from "@nestjs/typeorm";
+import { FindOneOptions, Repository } from "typeorm";
+import { Repo } from "./repo.entity";
+import { Staff } from "../staff/staff.entity";
+import { ApiBody, ApiOperation, ApiResponse, ApiTags } from "@nestjs/swagger";
+import { CreateRepoDto } from "../dto/create-repo.dto";
+import { UpdateRepoDto } from "../dto/update-repo.dto";
 
 @Injectable()
-@ApiTags('Repo')
+@ApiTags("Repo")
 export class RepoService {
   constructor(
     @InjectRepository(Repo)
-    private readonly repoRepository: Repository<Repo>,
+    private readonly repoRepository: Repository<Repo>
   ) {}
 
-  @ApiOperation({ summary: 'Crear un nuevo repositorio' }) 
-  @ApiResponse({ status: 201, description: 'Repositorio creado exitosamente' })
+  @ApiOperation({ summary: "Crear un nuevo repositorio" })
+  @ApiResponse({ status: 201, description: "Repositorio creado exitosamente" })
   @ApiBody({ type: Repo })
   async createRepo(
-    nombreProyecto: string,
-    descripcion: string,
-    fechaInicio: Date,
-    fechaFinalizacion: Date,
-    autor: string,
-    colaboradores: string,
-    archivo?: Express.Multer.File,
+    createRepoDto: CreateRepoDto,
+    archivo?: Express.Multer.File
   ): Promise<Repo> {
+    const {
+      nombreProyecto,
+      descripcion,
+      fechaInicio,
+      fechaFinalizacion,
+      autor,
+      colaboradores,
+    } = createRepoDto;
     const repo = new Repo();
     repo.nombreProyecto = nombreProyecto;
     repo.descripcion = descripcion;
@@ -42,36 +47,47 @@ export class RepoService {
     return savedRepo;
   }
 
-  @ApiOperation({ summary: 'Obtener todos los repositorios' })
-  @ApiResponse({ status: 200, description: 'Repositorios encontrados', type: [Repo] })
+  @ApiOperation({ summary: "Obtener todos los repositorios" })
+  @ApiResponse({
+    status: 200,
+    description: "Repositorios encontrados",
+    type: [Repo],
+  })
   async getAllRepo(): Promise<Repo[]> {
     return this.repoRepository.find();
   }
 
-  @ApiOperation({ summary: 'Eliminar un repositorio por ID' })
-  @ApiResponse({ status: 200, description: 'Repositorio eliminado exitosamente' })
+  @ApiOperation({ summary: "Eliminar un repositorio por ID" })
+  @ApiResponse({
+    status: 200,
+    description: "Repositorio eliminado exitosamente",
+  })
   async deleteRepo(id: number): Promise<void> {
     await this.repoRepository.delete(id);
   }
 
-  @ApiOperation({ summary: 'Obtener un repositorio por ID' })
-  @ApiResponse({ status: 200, description: 'Repositorio encontrado', type: Repo })
-  @ApiResponse({ status: 404, description: 'Repositorio no encontrado' })
+  @ApiOperation({ summary: "Obtener un repositorio por ID" })
+  @ApiResponse({
+    status: 200,
+    description: "Repositorio encontrado",
+    type: Repo,
+  })
+  @ApiResponse({ status: 404, description: "Repositorio no encontrado" })
   async getRepoById(id: number): Promise<Repo | undefined> {
     const options: FindOneOptions<Repo> = { where: { id } };
     return this.repoRepository.findOne(options);
   }
 
-  @ApiOperation({ summary: 'Actualizar un repositorio por ID' })
-  @ApiResponse({ status: 200, description: 'Repositorio actualizado exitosamente', type: Repo })
-  @ApiResponse({ status: 404, description: 'Repositorio no encontrado' })
+  @ApiOperation({ summary: "Actualizar un repositorio por ID" })
+  @ApiResponse({
+    status: 200,
+    description: "Repositorio actualizado exitosamente",
+    type: Repo,
+  })
+  @ApiResponse({ status: 404, description: "Repositorio no encontrado" })
   @ApiBody({ type: Repo })
-  async updateRepo(
-    id: number,
-    nombreProyecto: string,
-    descripcion: string,
-    colaboradores: string,
-  ): Promise<Repo> {
+  async updateRepo(id: number, updateRepoDto: UpdateRepoDto): Promise<Repo> {
+    const { nombreProyecto, descripcion, colaboradores } = updateRepoDto;
     const buscar: FindOneOptions<Repo> = { where: { id } };
     const repo: Repo | undefined = await this.repoRepository.findOne(buscar);
 
@@ -79,11 +95,10 @@ export class RepoService {
       throw new Error(`Repo with id ${id} not found`);
     }
 
-    repo.nombreProyecto = nombreProyecto;
-    repo.descripcion = descripcion;
-    repo.colaboradores = colaboradores;
+    repo.nombreProyecto = nombreProyecto || repo.nombreProyecto;
+    repo.descripcion = descripcion || repo.descripcion;
+    repo.colaboradores = colaboradores || repo.colaboradores;
 
     return this.repoRepository.save(repo);
   }
-
 }
