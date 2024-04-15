@@ -11,7 +11,7 @@ import { CreateStaffDto } from "../dto/create-staff.dto";
 
 @Injectable()
 export class AuthService {
-  private readonly JWT_SECRET = "your_secret_key"; // Cambia esto por tu clave secreta
+  private readonly JWT_SECRET = "your_secret_key";
 
   constructor(private readonly staffService: StaffService) {}
 

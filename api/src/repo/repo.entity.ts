@@ -4,6 +4,8 @@ import {
   Column,
   ManyToOne,
   OneToMany,
+  ManyToMany,
+  JoinTable,
 } from "typeorm";
 import { ApiProperty, ApiTags } from "@nestjs/swagger";
 import { Staff } from "src/staff/staff.entity";
@@ -49,5 +51,9 @@ export class Repo {
   autor: string;
 
   @OneToMany(() => StaffRepo, (staffRepo) => staffRepo.repo)
-  staffRepos: StaffRepo[];
+  Reposstaff: StaffRepo[];
+
+  @ManyToMany(() => Staff, staff => staff.repos)
+  @JoinTable()
+  staff: Staff[];
 }

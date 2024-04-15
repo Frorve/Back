@@ -7,11 +7,11 @@ export class StaffRepo {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @ManyToOne(() => Staff, (staff) => staff.staffRepos, { onDelete: "CASCADE" })
+  @ManyToOne(() => Staff, (staff) => staff.staffRepos)
   @JoinColumn({ name: "staffId" })
   staff: Staff;
 
-  @ManyToOne(() => Repo, (repo) => repo.staffRepos, { onDelete: "CASCADE" })
+  @ManyToOne(() => Repo, (repo) => repo.Reposstaff)
   @JoinColumn({ name: "repoId" })
   repo: Repo;
 }

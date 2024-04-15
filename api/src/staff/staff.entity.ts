@@ -1,6 +1,7 @@
-import { Entity, PrimaryGeneratedColumn, Column, OneToMany } from "typeorm";
+import { Entity, PrimaryGeneratedColumn, Column, OneToMany, ManyToMany } from "typeorm";
 import { ApiProperty, ApiTags } from "@nestjs/swagger";
 import { StaffRepo } from "../staff-repo/staff-repo.entity";
+import { Repo } from "src/repo/repo.entity";
 
 @Entity()
 @ApiTags("Staff")
@@ -27,4 +28,7 @@ export class Staff {
 
   @OneToMany(() => StaffRepo, (staffRepo) => staffRepo.staff)
   staffRepos: StaffRepo[];
+
+  @ManyToMany(() => Repo, repo => repo.staff)
+  repos: Repo[];
 }
