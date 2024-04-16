@@ -29,6 +29,7 @@ export class RepoService {
       fechaFinalizacion,
       autor,
       colaboradores,
+      nombreArchivo,
     } = createRepoDto;
     const repo = new Repo();
     repo.nombreProyecto = nombreProyecto;
@@ -37,6 +38,7 @@ export class RepoService {
     repo.fechaFinalizacion = fechaFinalizacion;
     repo.autor = autor;
     repo.colaboradores = colaboradores;
+    repo.nombreArchivo = nombreArchivo;
 
     if (archivo) {
       repo.archivo = archivo.buffer;

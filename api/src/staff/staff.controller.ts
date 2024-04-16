@@ -33,9 +33,7 @@ export class StaffController {
     status: 409,
     description: "El nombre de usuario o correo electrónico ya están en uso",
   })
-  async createStaff(
-    @Body()createStaffDto: CreateStaffDto
-  ) {
+  async createStaff(@Body() createStaffDto: CreateStaffDto) {
     try {
       const newUser = await this.staffService.createStaff(createStaffDto);
       return { message: "Usuario creado exitosamente", user: newUser };

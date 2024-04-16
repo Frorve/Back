@@ -28,8 +28,8 @@ export class AuthService {
       nombre,
       cargo,
       correoElectronico,
-      contraseña: hashedPassword
-  });
+      contraseña: hashedPassword,
+    });
     return newUser;
   }
 

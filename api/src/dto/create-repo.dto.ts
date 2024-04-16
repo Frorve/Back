@@ -1,4 +1,10 @@
-import { IsString, IsOptional, IsNotEmpty, IsDate } from "class-validator";
+import {
+  IsString,
+  IsOptional,
+  IsNotEmpty,
+  IsDate,
+  IsDateString,
+} from "class-validator";
 
 export class CreateRepoDto {
   @IsString()
@@ -9,10 +15,10 @@ export class CreateRepoDto {
   @IsNotEmpty()
   descripcion: string;
 
-  @IsDate()
+  @IsDateString()
   fechaInicio: Date;
 
-  @IsDate()
+  @IsDateString()
   fechaFinalizacion: Date;
 
   @IsString()
@@ -23,5 +29,9 @@ export class CreateRepoDto {
   @IsOptional()
   colaboradores?: string;
 
+  @IsOptional()
   archivo?: Express.Multer.File;
+
+  @IsOptional()
+  nombreArchivo?: string;
 }

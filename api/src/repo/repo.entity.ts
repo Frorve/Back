@@ -50,10 +50,14 @@ export class Repo {
   @ApiProperty({ description: "Nombre del autor del repositorio" })
   autor: string;
 
+  @Column({ nullable: true })
+  @ApiProperty({ description: "Nombre del archivo asociado al repositorio" })
+  nombreArchivo: string;
+
   @OneToMany(() => StaffRepo, (staffRepo) => staffRepo.repo)
   Reposstaff: StaffRepo[];
 
-  @ManyToMany(() => Staff, staff => staff.repos)
+  @ManyToMany(() => Staff, (staff) => staff.repos)
   @JoinTable()
   staff: Staff[];
 }
