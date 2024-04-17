@@ -92,4 +92,14 @@ export class RepoController {
   deleteRepo(@Param("id") id: string) {
     return this.repoService.deleteRepo(+id);
   }
+
+  // @Post(":repoId/assign/:userId")
+  // async assignRepoToUser(
+  //   @Param("repoId") repoId: number,
+  //   @Param("userId") userId: number
+  // ) {
+  //   await this.repoService.assignRepoToUser(repoId, userId);
+  //   return { message: "Repositorio asignado al usuario exitosamente" };
+  // }
+
 }

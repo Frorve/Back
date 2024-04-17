@@ -89,7 +89,7 @@ export class RepoService {
   @ApiResponse({ status: 404, description: "Repositorio no encontrado" })
   @ApiBody({ type: Repo })
   async updateRepo(id: number, updateRepoDto: UpdateRepoDto): Promise<Repo> {
-    const { nombreProyecto, descripcion, colaboradores } = updateRepoDto;
+    const { nombreProyecto, descripcion, fechaFinalizacion } = updateRepoDto;
     const buscar: FindOneOptions<Repo> = { where: { id } };
     const repo: Repo | undefined = await this.repoRepository.findOne(buscar);
 
@@ -99,8 +99,21 @@ export class RepoService {
 
     repo.nombreProyecto = nombreProyecto || repo.nombreProyecto;
     repo.descripcion = descripcion || repo.descripcion;
-    repo.colaboradores = colaboradores || repo.colaboradores;
+    repo.fechaFinalizacion = fechaFinalizacion || repo.fechaFinalizacion;
 
     return this.repoRepository.save(repo);
   }
+
+  // async assignRepoToUser(repoId: number, userId: number): Promise<void> {
+  //   const repo = await this.repoRepository.findOne({
+  //     where: { id: repoId },
+  //     relations: ["repo"],
+  //   });
+  //   if (!repo) {
+  //     throw new Error(`Repo with id ${repoId} not found`);
+  //   }
+  //   repo.authorId = userId; // Suponiendo que tienes una columna authorId en tu entidad de Repo para almacenar el ID del autor
+  //   await this.repoRepository.save(repo);
+  // }
+
 }

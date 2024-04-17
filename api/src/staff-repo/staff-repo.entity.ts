@@ -11,7 +11,7 @@ export class StaffRepo {
   @JoinColumn({ name: "staffId" })
   staff: Staff;
 
-  @ManyToOne(() => Repo, (repo) => repo.Reposstaff)
+  @ManyToOne(() => Repo, (repo) => repo.staffRepos)
   @JoinColumn({ name: "repoId" })
   repo: Repo;
 }

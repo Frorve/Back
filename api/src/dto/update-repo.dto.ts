@@ -1,4 +1,4 @@
-import { IsString, IsOptional } from "class-validator";
+import { IsString, IsOptional, IsDateString } from "class-validator";
 
 export class UpdateRepoDto {
   @IsString()
@@ -9,7 +9,7 @@ export class UpdateRepoDto {
   @IsOptional()
   descripcion?: string;
 
-  @IsString()
+  @IsDateString()
   @IsOptional()
-  colaboradores?: string;
+  fechaFinalizacion?: Date;
 }

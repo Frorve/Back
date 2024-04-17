@@ -8,6 +8,7 @@ import {
   HttpCode,
   HttpStatus,
   Query,
+  Param,
 } from "@nestjs/common";
 import { StaffService } from "./staff.service";
 import * as bcrypt from "bcryptjs";
@@ -100,4 +101,5 @@ export class StaffController {
   getAllStaff() {
     return this.staffService.getAllStaff();
   }
+
 }

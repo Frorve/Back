@@ -55,7 +55,7 @@ export class Repo {
   nombreArchivo: string;
 
   @OneToMany(() => StaffRepo, (staffRepo) => staffRepo.repo)
-  Reposstaff: StaffRepo[];
+  staffRepos: StaffRepo[];
 
   @ManyToMany(() => Staff, (staff) => staff.repos)
   @JoinTable()
