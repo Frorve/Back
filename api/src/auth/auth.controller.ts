@@ -7,17 +7,16 @@ import {
 } from "@nestjs/common";
 import { AuthService } from "./auth.service";
 import { CreateStaffDto } from "../dto/create-staff.dto";
+import { LoginStaffDto } from "../dto/login-staff.dto";
 
 @Controller("auth")
 export class AuthController {
   constructor(private readonly authService: AuthService) {}
 
   @Post("login")
-  async login(
-    @Body() { nombre, contraseña }: { nombre: string; contraseña: string }
-  ) {
+  async login(@Body() loginStaffDto: LoginStaffDto) {
     try {
-      const token = await this.authService.login(nombre, contraseña);
+      const token = await this.authService.login(loginStaffDto);
       return { success: true, token };
     } catch (error) {
       throw new UnauthorizedException("Credenciales incorrectas");

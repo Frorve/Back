@@ -6,6 +6,7 @@ import { Staff } from "../staff/staff.entity";
 import { ApiBody, ApiOperation, ApiResponse, ApiTags } from "@nestjs/swagger";
 import { CreateRepoDto } from "../dto/create-repo.dto";
 import { UpdateRepoDto } from "../dto/update-repo.dto";
+import { arch } from "os";
 
 @Injectable()
 @ApiTags("Repo")
@@ -89,7 +90,7 @@ export class RepoService {
   @ApiResponse({ status: 404, description: "Repositorio no encontrado" })
   @ApiBody({ type: Repo })
   async updateRepo(id: number, updateRepoDto: UpdateRepoDto): Promise<Repo> {
-    const { nombreProyecto, descripcion, fechaFinalizacion } = updateRepoDto;
+    const { nombreProyecto, descripcion, fechaFinalizacion, archivo } = updateRepoDto;
     const buscar: FindOneOptions<Repo> = { where: { id } };
     const repo: Repo | undefined = await this.repoRepository.findOne(buscar);
 
@@ -100,6 +101,10 @@ export class RepoService {
     repo.nombreProyecto = nombreProyecto || repo.nombreProyecto;
     repo.descripcion = descripcion || repo.descripcion;
     repo.fechaFinalizacion = fechaFinalizacion || repo.fechaFinalizacion;
+
+    if(archivo) {
+      repo.archivo = archivo.buffer;
+    }
 
     return this.repoRepository.save(repo);
   }

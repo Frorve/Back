@@ -79,7 +79,12 @@ export class RepoController {
   @ApiResponse({ status: 404, description: "Repositorio no encontrado" })
   @ApiBody({ type: Repo })
   @UseInterceptors(FileInterceptor("archivo"))
-  updateRepo(@Param("id") id: string, @Body() updateRepoDto: UpdateRepoDto) {
+  async updateRepo(
+    @Param("id") id: string,
+    @UploadedFile() archivo: Express.Multer.File,
+    @Body() updateRepoDto: UpdateRepoDto
+  ) {
+    updateRepoDto.archivo = archivo;
     return this.repoService.updateRepo(+id, updateRepoDto);
   }
 

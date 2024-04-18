@@ -3,9 +3,7 @@ import { StaffController } from "../staff.controller";
 import { StaffService } from "../staff.service";
 import { ConflictException } from "@nestjs/common";
 import { Staff } from "../staff.entity";
-import { AppModule } from "../../app.module";
 import { StaffModule } from "../staff.module";
-import { Repo } from "src/repo/repo.entity";
 
 describe("StaffController", () => {
   let staffController: StaffController;

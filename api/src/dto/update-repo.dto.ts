@@ -12,4 +12,7 @@ export class UpdateRepoDto {
   @IsDateString()
   @IsOptional()
   fechaFinalizacion?: Date;
+
+  @IsOptional()
+  archivo?: Express.Multer.File;
 }
