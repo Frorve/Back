@@ -21,33 +21,6 @@ export class StaffService {
     private readonly staffRepository: Repository<Staff>
   ) {}
 
-  @ApiOperation({ summary: "Crear un nuevo usuario" })
-  @ApiConflictResponse({
-    description: "El nombre de usuario o correo electrónico ya están en uso",
-  })
-  @ApiBody({ type: Staff })
-  async createStaff(createStaffDto: CreateStaffDto): Promise<Staff> {
-    const { nombre, cargo, correoElectronico, contraseña } = createStaffDto;
-    const existingUser = await this.staffRepository.findOne({
-      where: [{ nombre }, { correoElectronico }],
-    });
-
-    if (existingUser) {
-      throw new ConflictException(
-        "El nombre de usuario o correo electrónico ya están en uso"
-      );
-    }
-
-    const hashedPassword = await bcrypt.hash(contraseña, 10);
-    const staff = this.staffRepository.create({
-      nombre,
-      cargo,
-      correoElectronico,
-      contraseña: hashedPassword,
-    });
-    return this.staffRepository.save(staff);
-  }
-
   @ApiOperation({ summary: "Obtener todos los usuarios" })
   @ApiResponse({ status: 200, description: "Lista de usuarios", type: [Staff] })
   async getAllStaff(): Promise<Staff[]> {

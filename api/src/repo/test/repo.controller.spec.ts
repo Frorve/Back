@@ -1,7 +1,9 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { RepoController } from '../repo.controller';
 import { RepoService } from '../repo.service';
-import { AppModule } from '../../app.module';
+import { Repo } from '../repo.entity';
+import { CreateRepoDto } from '../../dto/create-repo.dto';
+import { UpdateRepoDto } from '../../dto/update-repo.dto';
 
 describe('RepoController', () => {
   let controller: RepoController;
@@ -9,17 +11,16 @@ describe('RepoController', () => {
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
-        imports: [AppModule],
       controllers: [RepoController],
       providers: [
         {
           provide: RepoService,
           useValue: {
             createRepo: jest.fn(),
-            getRepoById: jest.fn(),
             getAllRepo: jest.fn(),
-            updateRepo: jest.fn(),
             deleteRepo: jest.fn(),
+            getRepoById: jest.fn(),
+            updateRepo: jest.fn(),
           },
         },
       ],
@@ -33,36 +34,25 @@ describe('RepoController', () => {
     expect(controller).toBeDefined();
   });
 
-  describe('createRepo', () => {
-    it('should create a new repository without an attachment', async () => {
-      const repoData = {
-        nombreProyecto: 'Proyecto de prueba Siu',
-        descripcion: 'Esta es una descripción de prueba Siu',
-        fechaInicio: new Date('2024-04-10'),
-        fechaFinalizacion: new Date('2024-05-10'),
-        colaboradores: 'Colaborador1, Colaborador2',
-        autor: 'Autor de prueba',
-      };
-  
-      const mockCreatedRepo = {
-        id: 1,
-        ...repoData,
-        archivo: null,
-      };
-  
-      jest.spyOn(service, 'createRepo').mockImplementation((data, archivo) => {
-        expect(data).toEqual(repoData);
-        expect(archivo).toBeUndefined();
-        return Promise.resolve(mockCreatedRepo);
-      });
-  
-      const result = await controller.createRepo(repoData, undefined);
-      expect(result).toBe(mockCreatedRepo);
-    });
+  it('should call service createRepo method with correct arguments', async () => {
+    const createRepoDto: CreateRepoDto = {
+      nombreProyecto: "Nombre del proyecto",
+      descripcion: "Descripción del proyecto",
+      fechaInicio: new Date(),
+      fechaFinalizacion: new Date(),
+    };
+    const archivo = {} as Express.Multer.File;
+
+    await controller.createRepo(createRepoDto, archivo);
+
+    expect(service.createRepo).toHaveBeenCalledWith(createRepoDto, archivo);
   });
-  
-  
 
-  // Add more test cases for other controller methods as needed
+  it('should call service getAllRepo method', async () => {
+    await controller.getAllRepo();
 
+    expect(service.getAllRepo).toHaveBeenCalled();
+  });
+
+  // Add more test cases for other controller methods
 });
