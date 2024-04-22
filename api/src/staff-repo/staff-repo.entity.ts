@@ -5,13 +5,16 @@ import { Repo } from "../repo/repo.entity";
 @Entity()
 export class StaffRepo {
   @PrimaryGeneratedColumn()
-  id: number;
+  staff_id: number;
 
-  @ManyToOne(() => Staff, (staff) => staff.staffRepos)
+  @PrimaryGeneratedColumn()
+  repo_id: number;
+
+  @ManyToOne(() => Staff)
   @JoinColumn({ name: "staffId" })
   staff: Staff;
 
-  @ManyToOne(() => Repo, (repo) => repo.staffRepos)
+  @ManyToOne(() => Repo)
   @JoinColumn({ name: "repoId" })
   repo: Repo;
 }

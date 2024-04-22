@@ -16,7 +16,7 @@ import { StaffRepo } from "../staff-repo/staff-repo.entity";
 export class Repo {
   @PrimaryGeneratedColumn()
   @ApiProperty({ description: "Identificador único del repositorio" })
-  id: number;
+  repo_id: number;
 
   @Column()
   @ApiProperty({ description: "Nombre del proyecto asociado al repositorio" })
@@ -54,10 +54,4 @@ export class Repo {
   @ApiProperty({ description: "Nombre del archivo asociado al repositorio" })
   nombreArchivo: string;
 
-  @OneToMany(() => StaffRepo, (staffRepo) => staffRepo.repo)
-  staffRepos: StaffRepo[];
-
-  @ManyToMany(() => Staff, (staff) => staff.repos)
-  @JoinTable()
-  staff: Staff[];
 }

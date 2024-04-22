@@ -14,7 +14,7 @@ import { Repo } from "src/repo/repo.entity";
 export class Staff {
   @PrimaryGeneratedColumn()
   @ApiProperty({ description: "Identificador único del personal" })
-  id: number;
+  staff_id: number;
 
   @Column()
   @ApiProperty({ description: "Nombre del personal" })
@@ -31,10 +31,4 @@ export class Staff {
   @Column()
   @ApiProperty({ description: "Contraseña del personal" })
   contraseña: string;
-
-  @OneToMany(() => StaffRepo, (staffRepo) => staffRepo.staff)
-  staffRepos: StaffRepo[];
-
-  @ManyToMany(() => Repo, (repo) => repo.staff)
-  repos: Repo[];
 }
