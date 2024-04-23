@@ -26,7 +26,7 @@ dotenv.config();
     AuthModule,
     StaffRepoModule,
   ],
-  providers: [],
+  providers: [StaffModule],
   controllers: [],
 })
 export class AppModule {}

@@ -3,20 +3,16 @@ import {
   PrimaryGeneratedColumn,
   Column,
   ManyToOne,
-  OneToMany,
-  ManyToMany,
-  JoinTable,
 } from "typeorm";
 import { ApiProperty, ApiTags } from "@nestjs/swagger";
 import { Staff } from "src/staff/staff.entity";
-import { StaffRepo } from "../staff-repo/staff-repo.entity";
 
 @Entity()
 @ApiTags("repo")
 export class Repo {
   @PrimaryGeneratedColumn()
   @ApiProperty({ description: "Identificador único del repositorio" })
-  repo_id: number;
+  id: number;
 
   @Column()
   @ApiProperty({ description: "Nombre del proyecto asociado al repositorio" })
@@ -53,5 +49,8 @@ export class Repo {
   @Column({ nullable: true })
   @ApiProperty({ description: "Nombre del archivo asociado al repositorio" })
   nombreArchivo: string;
+
+  @ManyToOne(() => Staff, staff => staff.repos)
+  staff: Staff;
 
 }

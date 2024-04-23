@@ -2,16 +2,11 @@ import { ConflictException, Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { Repository } from "typeorm";
 import { Staff } from "./staff.entity";
-import * as bcrypt from "bcryptjs";
 import {
   ApiTags,
   ApiOperation,
   ApiResponse,
-  ApiConflictResponse,
-  ApiBody,
 } from "@nestjs/swagger";
-import { CreateStaffDto } from "src/dto/create-staff.dto";
-
 
 @Injectable()
 @ApiTags("Staff")
@@ -43,10 +38,8 @@ export class StaffService {
       .getMany();
   }
 
-  @ApiOperation({ summary: "Buscar un usuario por nombre de usuario" })
-  @ApiResponse({ status: 200, description: "Usuario encontrado", type: Staff })
-  async findByUsername(nombre: string): Promise<Staff> {
-    return this.staffRepository.findOne({ where: { nombre } });
+  async findByUsername(username: string): Promise<Staff> {
+    return this.staffRepository.findOne({ where: { nombre: username } });
   }
 
   @ApiOperation({ summary: "Obtener todos los usuarios" })
@@ -57,5 +50,13 @@ export class StaffService {
       relations: ["repos"],
     });
   }  
+
+  async getStaffWithReposById(id: number): Promise<Staff | undefined> {
+    return this.staffRepository.findOne({ where: { id }, relations: ["repos"] });
+  }
+
+  async getStaffWithReposByName(name: string): Promise<Staff | undefined> {
+    return this.staffRepository.findOne({ where: { nombre: name }, relations: ["repos"] });
+}
 
 }

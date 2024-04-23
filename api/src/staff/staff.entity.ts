@@ -3,10 +3,8 @@ import {
   PrimaryGeneratedColumn,
   Column,
   OneToMany,
-  ManyToMany,
 } from "typeorm";
 import { ApiProperty, ApiTags } from "@nestjs/swagger";
-import { StaffRepo } from "../staff-repo/staff-repo.entity";
 import { Repo } from "src/repo/repo.entity";
 
 @Entity()
@@ -14,7 +12,7 @@ import { Repo } from "src/repo/repo.entity";
 export class Staff {
   @PrimaryGeneratedColumn()
   @ApiProperty({ description: "Identificador único del personal" })
-  staff_id: number;
+  id: number;
 
   @Column()
   @ApiProperty({ description: "Nombre del personal" })
@@ -31,4 +29,7 @@ export class Staff {
   @Column()
   @ApiProperty({ description: "Contraseña del personal" })
   contraseña: string;
+
+  @OneToMany(() => Repo, repo => repo.staff)
+  repos: Repo[];
 }

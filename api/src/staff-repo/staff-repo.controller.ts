@@ -16,17 +16,18 @@ export class StaffRepoController {
 
   @Get("staff/:staffId")
   async findByStaffId(
-    @Param("staffId") staffId: number
+    @Param("staffId") staffId: string
   ): Promise<StaffRepo[]> {
-    return this.staffRepoService.findByStaffId(staffId);
+    const parsedStaffId = parseInt(staffId, 10);
+    return this.staffRepoService.findByStaffId(parsedStaffId);
   }
 
   @Get("project/:repoId")
-
   async findByrepoId(
-    @Param("repoId") repoId: number
+    @Param("repoId") repoId: string
   ): Promise<StaffRepo[]> {
-    return this.staffRepoService.findByrepoId(repoId);
+    const parsedRepoId = parseInt(repoId, 10);
+    return this.staffRepoService.findByrepoId(parsedRepoId);
   }
 
   @Delete("project/:repoId")

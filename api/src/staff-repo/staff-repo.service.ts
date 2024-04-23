@@ -47,7 +47,7 @@ export class StaffRepoService {
   }
 
   async findUserById(userId: number): Promise<{ username: string } | null> {
-    const user = await this.staffRepoRepository.query(`SELECT username FROM staff WHERE staff_id = $1`, [userId]);
+    const user = await this.staffRepoRepository.query(`SELECT nombre FROM staff_repo WHERE staff_id = $1`, [userId]);
     return user[0] || null;
   }
 
@@ -56,7 +56,7 @@ export class StaffRepoService {
       .createQueryBuilder("staff_repo")
       .leftJoinAndSelect("staff_repo.staff", "staff")
       .leftJoinAndSelect("staff_repo.repo", "repo")
-      .where("staff.username = :username", { username })
+      .where("staff.nombre = :username", { username })
       .getMany();
   }
 

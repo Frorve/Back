@@ -1,19 +1,20 @@
-import { Injectable } from "@nestjs/common";
+import { Injectable, NotFoundException } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { FindOneOptions, Repository } from "typeorm";
 import { Repo } from "./repo.entity";
-import { Staff } from "../staff/staff.entity";
 import { ApiBody, ApiOperation, ApiResponse, ApiTags } from "@nestjs/swagger";
 import { CreateRepoDto } from "../dto/create-repo.dto";
 import { UpdateRepoDto } from "../dto/update-repo.dto";
-import { arch } from "os";
+import { Staff } from "src/staff/staff.entity";
 
 @Injectable()
 @ApiTags("Repo")
 export class RepoService {
   constructor(
     @InjectRepository(Repo)
-    private readonly repoRepository: Repository<Repo>
+    private readonly repoRepository: Repository<Repo>,
+    @InjectRepository(Staff)
+    private readonly staffRepository: Repository<Staff>,
   ) {}
 
   @ApiOperation({ summary: "Crear un nuevo repositorio" })
@@ -21,14 +22,14 @@ export class RepoService {
   @ApiBody({ type: Repo })
   async createRepo(
     createRepoDto: CreateRepoDto,
-    archivo?: Express.Multer.File
+    username: string,
+    archivo?: Express.Multer.File,
   ): Promise<Repo> {
     const {
       nombreProyecto,
       descripcion,
       fechaInicio,
       fechaFinalizacion,
-      autor,
       colaboradores,
       nombreArchivo,
     } = createRepoDto;
@@ -37,7 +38,7 @@ export class RepoService {
     repo.descripcion = descripcion;
     repo.fechaInicio = fechaInicio;
     repo.fechaFinalizacion = fechaFinalizacion;
-    repo.autor = autor;
+    repo.autor = username;
     repo.colaboradores = colaboradores;
     repo.nombreArchivo = nombreArchivo;
 
@@ -56,8 +57,8 @@ export class RepoService {
     description: "Repositorios encontrados",
     type: [Repo],
   })
-  async getAllRepo(): Promise<Repo[]> {
-    return this.repoRepository.find();
+  async getAllRepoByUsername(username: string): Promise<Repo[]> {
+    return this.repoRepository.find({ where: { autor: username } });
   }
 
   @ApiOperation({ summary: "Eliminar un repositorio por ID" })
@@ -108,17 +109,4 @@ export class RepoService {
 
     return this.repoRepository.save(repo);
   }
-
-  // async assignRepoToUser(repoId: number, userId: number): Promise<void> {
-  //   const repo = await this.repoRepository.findOne({
-  //     where: { id: repoId },
-  //     relations: ["repo"],
-  //   });
-  //   if (!repo) {
-  //     throw new Error(`Repo with id ${repoId} not found`);
-  //   }
-  //   repo.authorId = userId; // Suponiendo que tienes una columna authorId en tu entidad de Repo para almacenar el ID del autor
-  //   await this.repoRepository.save(repo);
-  // }
-
 }

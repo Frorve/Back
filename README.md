@@ -3,8 +3,10 @@
 </p>
 
 <h1 align="center">
-Basic NestJs Application
+NestJs Application Stafko - Beebit
 </h1>
+
+App will run at: [http://localhost:3000](http://localhost:3000)
 
 ## Init
 ### Run the containers:
@@ -17,5 +19,25 @@ docker compose up --build
 cd ./api && npm install
 ```
 
-<br></br>
-App will run at: [http://localhost:3000](http://localhost:3000)
+## Screenshots
+
+### Register:
+<img src="screenshots/Register.png">
+
+### Login:
+<img src="screenshots/Login.png">
+
+### Reset Password:
+<img src="screenshots/Recuperar password.png">
+
+### Main Page:
+<img src="screenshots/Main.png">
+
+### Form Nuevo Proyecto:
+<img src="screenshots/Form nuevo proyecto.png">
+
+### Form Editar Proyecto:
+<img src="screenshots/Form editar proyecto.png">
+
+### Detalles del Proyecto:
+<img src="screenshots/Detalles.png">

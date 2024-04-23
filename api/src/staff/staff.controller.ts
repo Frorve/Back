@@ -1,26 +1,17 @@
 import {
   Controller,
   Get,
-  Post,
-  Body,
-  ConflictException,
-  UnauthorizedException,
-  HttpCode,
-  HttpStatus,
-  Query,
   Param,
+  Query,
 } from "@nestjs/common";
 import { StaffService } from "./staff.service";
-import * as bcrypt from "bcryptjs";
 import {
   ApiTags,
   ApiOperation,
   ApiResponse,
-  ApiBody,
   ApiQuery,
 } from "@nestjs/swagger";
 import { Staff } from "./staff.entity";
-import { CreateStaffDto } from "../dto/create-staff.dto";
 
 @Controller("staff")
 @ApiTags("Staff")
@@ -54,6 +45,17 @@ export class StaffController {
   })
   getAllStaff() {
     return this.staffService.getAllStaff();
+  }
+
+  @Get("username/:username")
+  async getByUsername(@Param("username") username: string): Promise<Staff> {
+    try {
+      const user = await this.staffService.findByUsername(username);
+      return user;
+    } catch (error) {
+      console.error("Error fetching user by username:", error);
+      throw new Error("Error fetching user by username");
+    }
   }
 
 }

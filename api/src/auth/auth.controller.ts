@@ -10,7 +10,6 @@ import {
 import { AuthService } from "./auth.service";
 import { CreateStaffDto } from "../dto/create-staff.dto";
 import { LoginStaffDto } from "../dto/login-staff.dto";
-import * as bcrypt from "bcryptjs";
 import { ApiOperation, ApiResponse } from "@nestjs/swagger";
 
 @Controller("auth")
