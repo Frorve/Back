@@ -1,11 +1,10 @@
-import { Injectable, NotFoundException } from "@nestjs/common";
+import { Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { FindOneOptions, Repository } from "typeorm";
 import { Repo } from "./repo.entity";
 import { ApiBody, ApiOperation, ApiResponse, ApiTags } from "@nestjs/swagger";
 import { CreateRepoDto } from "../dto/create-repo.dto";
 import { UpdateRepoDto } from "../dto/update-repo.dto";
-import { Staff } from "src/staff/staff.entity";
 
 @Injectable()
 @ApiTags("Repo")
@@ -13,8 +12,6 @@ export class RepoService {
   constructor(
     @InjectRepository(Repo)
     private readonly repoRepository: Repository<Repo>,
-    @InjectRepository(Staff)
-    private readonly staffRepository: Repository<Staff>,
   ) {}
 
   @ApiOperation({ summary: "Crear un nuevo repositorio" })

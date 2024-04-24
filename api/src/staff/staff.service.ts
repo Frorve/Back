@@ -1,12 +1,8 @@
-import { ConflictException, Injectable } from "@nestjs/common";
+import { Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { Repository } from "typeorm";
 import { Staff } from "./staff.entity";
-import {
-  ApiTags,
-  ApiOperation,
-  ApiResponse,
-} from "@nestjs/swagger";
+import { ApiTags, ApiOperation, ApiResponse } from "@nestjs/swagger";
 
 @Injectable()
 @ApiTags("Staff")
@@ -49,14 +45,19 @@ export class StaffService {
       where: { id: currentUser.id },
       relations: ["repos"],
     });
-  }  
+  }
 
   async getStaffWithReposById(id: number): Promise<Staff | undefined> {
-    return this.staffRepository.findOne({ where: { id }, relations: ["repos"] });
+    return this.staffRepository.findOne({
+      where: { id },
+      relations: ["repos"],
+    });
   }
 
   async getStaffWithReposByName(name: string): Promise<Staff | undefined> {
-    return this.staffRepository.findOne({ where: { nombre: name }, relations: ["repos"] });
-}
-
+    return this.staffRepository.findOne({
+      where: { nombre: name },
+      relations: ["repos"],
+    });
+  }
 }

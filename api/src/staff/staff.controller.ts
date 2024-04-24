@@ -1,16 +1,6 @@
-import {
-  Controller,
-  Get,
-  Param,
-  Query,
-} from "@nestjs/common";
+import { Controller, Get, Param, Query } from "@nestjs/common";
 import { StaffService } from "./staff.service";
-import {
-  ApiTags,
-  ApiOperation,
-  ApiResponse,
-  ApiQuery,
-} from "@nestjs/swagger";
+import { ApiTags, ApiOperation, ApiResponse, ApiQuery } from "@nestjs/swagger";
 import { Staff } from "./staff.entity";
 
 @Controller("staff")
@@ -57,5 +47,4 @@ export class StaffController {
       throw new Error("Error fetching user by username");
     }
   }
-
 }

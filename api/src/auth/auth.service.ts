@@ -10,7 +10,7 @@ import { CreateStaffDto } from "../dto/create-staff.dto";
 import { LoginStaffDto } from "../dto/login-staff.dto";
 import { InjectRepository } from "@nestjs/typeorm";
 import { Repository } from "typeorm";
-import { ApiBody, ApiConflictResponse, ApiOperation, ApiResponse } from "@nestjs/swagger";
+import { ApiBody, ApiConflictResponse, ApiOperation } from "@nestjs/swagger";
 import { JwtPayload } from "./jwt-payload.interface";
 
 @Injectable()

@@ -10,7 +10,6 @@ import {
   Res,
   Put,
   NotFoundException,
-  Req,
 } from "@nestjs/common";
 import { RepoService } from "./repo.service";
 import { Repo } from "./repo.entity";
@@ -19,15 +18,14 @@ import { Multer } from "multer";
 import { ApiTags, ApiOperation, ApiResponse, ApiBody } from "@nestjs/swagger";
 import { CreateRepoDto } from "../dto/create-repo.dto";
 import { UpdateRepoDto } from "../dto/update-repo.dto";
-import { StaffService } from "src/staff/staff.service";
-import { Request, Response } from 'express';
+import { Response } from "express";
 import { Readable } from "typeorm/platform/PlatformTools";
 
 @Controller("repo")
 @ApiTags("Repo")
 export class RepoController {
-  constructor(private repoService: RepoService,
-    private staffService: StaffService,
+  constructor(
+    private repoService: RepoService,
   ) {}
 
   @Post(":username")
@@ -38,24 +36,30 @@ export class RepoController {
   createRepo(
     @Body() createRepoDto: CreateRepoDto,
     @UploadedFile() archivo: Express.Multer.File,
-    @Param("username") username: string,
+    @Param("username") username: string
   ) {
     return this.repoService.createRepo(createRepoDto, username, archivo);
-  } 
+  }
 
   @Get("download/:id")
-  async downloadFile(@Param("id") id: number, @Res() res: Response): Promise<any> {
+  async downloadFile(
+    @Param("id") id: number,
+    @Res() res: Response
+  ): Promise<any> {
     const repo = await this.repoService.getRepoById(id);
     if (!repo || !repo.archivo) {
       throw new NotFoundException(`Repo with id ${id} not found`);
     }
 
-    res.setHeader('Content-Type', 'application/octet-stream');
-    res.setHeader('Content-Disposition', `attachment; filename=${repo.nombreArchivo}`);
+    res.setHeader("Content-Type", "application/octet-stream");
+    res.setHeader(
+      "Content-Disposition",
+      `attachment; filename=${repo.nombreArchivo}`
+    );
 
     const stream = Readable.from(repo.archivo);
     stream.pipe(res);
-  }  
+  }
 
   @Get(":username")
   @ApiOperation({ summary: "Obtener todos los repositorios" })
@@ -108,5 +112,4 @@ export class RepoController {
   deleteRepo(@Param("id") id: string) {
     return this.repoService.deleteRepo(+id);
   }
-
 }

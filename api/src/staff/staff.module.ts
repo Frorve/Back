@@ -8,6 +8,6 @@ import { Staff } from "./staff.entity";
   imports: [TypeOrmModule.forFeature([Staff])],
   controllers: [StaffController],
   providers: [StaffService],
-  exports:[StaffService, TypeOrmModule]
+  exports: [StaffService, TypeOrmModule],
 })
 export class StaffModule {}

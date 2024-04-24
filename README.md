@@ -3,7 +3,7 @@
 </p>
 
 <h1 align="center">
-NestJs Application Stafko - Beebit
+NestJs Application Stafko - Beebit | Fran
 </h1>
 
 App will run at: [http://localhost:3000](http://localhost:3000)
