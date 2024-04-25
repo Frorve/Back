@@ -6,15 +6,15 @@
 NestJs Application Stafko - Beebit | Fran
 </h1>
 
-App will run at: [http://localhost:3000](http://localhost:3000)
+La aplicación se ejecutará en: [http://localhost:3000](http://localhost:3000)
 
 ## Init
-### Run the containers:
+### Ejecutar el contenedor:
 ```bash
 docker compose up --build
 ```
 
-### Install application dependencies:
+### Instalación de las dependencias necesarias:
 ```bash
 cd ./api && npm install
 ```

@@ -13,6 +13,10 @@ export class UpdateRepoDto {
   @IsOptional()
   fechaFinalizacion?: Date;
 
+  @IsString()
+  @IsOptional()
+  colaboradores?: string;
+
   @IsOptional()
   archivo?: Express.Multer.File;
 }

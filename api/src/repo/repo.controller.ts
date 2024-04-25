@@ -112,4 +112,16 @@ export class RepoController {
   deleteRepo(@Param("id") id: string) {
     return this.repoService.deleteRepo(+id);
   }
+
+  @Get("collaborator-repos/:username")
+@ApiOperation({ summary: "Obtener repositorios en los que el usuario es un colaborador" })
+@ApiResponse({
+  status: 200,
+  description: "Repositorios encontrados",
+  type: [Repo],
+})
+async getCollaboratorRepos(@Param("username") username: string) {
+  return this.repoService.getReposForCollaborator(username);
+}
+
 }

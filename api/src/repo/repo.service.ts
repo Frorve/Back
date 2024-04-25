@@ -1,6 +1,6 @@
-import { Injectable } from "@nestjs/common";
+import { Injectable, NotFoundException } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
-import { FindOneOptions, Repository } from "typeorm";
+import { FindOneOptions, Like, Repository } from "typeorm";
 import { Repo } from "./repo.entity";
 import { ApiBody, ApiOperation, ApiResponse, ApiTags } from "@nestjs/swagger";
 import { CreateRepoDto } from "../dto/create-repo.dto";
@@ -88,7 +88,7 @@ export class RepoService {
   @ApiResponse({ status: 404, description: "Repositorio no encontrado" })
   @ApiBody({ type: Repo })
   async updateRepo(id: number, updateRepoDto: UpdateRepoDto): Promise<Repo> {
-    const { nombreProyecto, descripcion, fechaFinalizacion, archivo } = updateRepoDto;
+    const { nombreProyecto, descripcion, fechaFinalizacion, colaboradores, archivo } = updateRepoDto;
     const buscar: FindOneOptions<Repo> = { where: { id } };
     const repo: Repo | undefined = await this.repoRepository.findOne(buscar);
 
@@ -99,6 +99,7 @@ export class RepoService {
     repo.nombreProyecto = nombreProyecto || repo.nombreProyecto;
     repo.descripcion = descripcion || repo.descripcion;
     repo.fechaFinalizacion = fechaFinalizacion || repo.fechaFinalizacion;
+    repo.colaboradores = colaboradores || repo.colaboradores;
 
     if(archivo) {
       repo.archivo = archivo.buffer;
@@ -106,4 +107,13 @@ export class RepoService {
 
     return this.repoRepository.save(repo);
   }
+
+async getReposForCollaborator(username: string): Promise<Repo[]> {
+  return this.repoRepository.find({
+    where: [
+      { colaboradores: Like(`%${username}%`) }
+    ]
+  });
+}
+
 }
