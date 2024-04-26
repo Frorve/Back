@@ -10,7 +10,7 @@ services:
       - db
     environment:
       DATABASE_URL: postgres://user:password@db:5432/postgres
-    command: sh -c "npm install && npm run build  && npm run start:dev"
+    command: sh -c "npm install && npm run build && npm run start:dev"
 
   db:
     image: postgres:13
