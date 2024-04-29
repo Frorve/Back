@@ -17,6 +17,10 @@ export class UpdateRepoDto {
   @IsOptional()
   colaboradores?: string;
 
+  @IsString()
+  @IsOptional()
+  cliente?: string;
+
   @IsOptional()
   archivo?: Express.Multer.File;
 }

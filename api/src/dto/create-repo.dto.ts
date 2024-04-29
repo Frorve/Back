@@ -28,6 +28,10 @@ export class CreateRepoDto {
   @IsOptional()
   colaboradores?: string;
 
+  @IsString()
+  @IsOptional()
+  cliente?: string;
+
   @IsOptional()
   archivo?: Express.Multer.File;
 

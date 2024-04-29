@@ -50,6 +50,10 @@ export class Repo {
   @ApiProperty({ description: "Nombre del archivo asociado al repositorio" })
   nombreArchivo: string;
 
+  @Column({ nullable: true })
+  @ApiProperty({ description: "Nombre del cliente asociado al repositorio" })
+  cliente: string;
+
   @ManyToOne(() => Staff, staff => staff.repos)
   staff: Staff;
 

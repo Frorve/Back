@@ -28,6 +28,7 @@ export class RepoService {
       fechaInicio,
       fechaFinalizacion,
       colaboradores,
+      cliente,
       nombreArchivo,
     } = createRepoDto;
     const repo = new Repo();
@@ -37,6 +38,7 @@ export class RepoService {
     repo.fechaFinalizacion = fechaFinalizacion;
     repo.autor = username;
     repo.colaboradores = colaboradores;
+    repo.cliente = cliente;
     repo.nombreArchivo = nombreArchivo;
 
     if (archivo) {
@@ -88,7 +90,7 @@ export class RepoService {
   @ApiResponse({ status: 404, description: "Repositorio no encontrado" })
   @ApiBody({ type: Repo })
   async updateRepo(id: number, updateRepoDto: UpdateRepoDto): Promise<Repo> {
-    const { nombreProyecto, descripcion, fechaFinalizacion, colaboradores, archivo } = updateRepoDto;
+    const { nombreProyecto, descripcion, fechaFinalizacion, colaboradores, cliente, archivo } = updateRepoDto;
     const buscar: FindOneOptions<Repo> = { where: { id } };
     const repo: Repo | undefined = await this.repoRepository.findOne(buscar);
 
@@ -100,6 +102,7 @@ export class RepoService {
     repo.descripcion = descripcion || repo.descripcion;
     repo.fechaFinalizacion = fechaFinalizacion || repo.fechaFinalizacion;
     repo.colaboradores = colaboradores || repo.colaboradores;
+    repo.cliente = cliente || repo.cliente;
 
     if(archivo) {
       repo.archivo = archivo.buffer;

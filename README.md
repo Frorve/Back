@@ -6,7 +6,7 @@
 NestJs Application Stafko - Beebit | Fran
 </h1>
 
-La aplicación se ejecutará en: [http://localhost:3000](http://localhost:3000)
+La aplicación del Backend se ejecutará en: [http://localhost:3000](http://localhost:3000)
 
 ## Init
 ### Ejecutar el contenedor:

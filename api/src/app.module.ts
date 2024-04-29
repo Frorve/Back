@@ -4,6 +4,7 @@ import { StaffModule } from "./staff/staff.module";
 import { RepoModule } from "./repo/repo.module";
 import { AuthModule } from "./auth/auth.module";
 import { StaffRepoModule } from "./staff-repo/staff-repo.module";
+import { ClienteModule } from "./cliente/cliente.module";
 import * as dotenv from "dotenv";
 import config from "./config";
 
@@ -25,6 +26,7 @@ dotenv.config();
     RepoModule,
     AuthModule,
     StaffRepoModule,
+    ClienteModule,
   ],
   providers: [StaffModule],
   controllers: [],
