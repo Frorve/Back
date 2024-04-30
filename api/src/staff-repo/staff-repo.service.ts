@@ -2,7 +2,7 @@ import { Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { Repository } from "typeorm";
 import { StaffRepo } from "./staff-repo.entity";
-import { StaffRepoDto } from "../dto/create-repo-staff.dto"
+import { StaffRepoDto } from "./dto/create-repo-staff.dto"
 
 @Injectable()
 export class StaffRepoService {

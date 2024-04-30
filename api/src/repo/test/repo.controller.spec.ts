@@ -2,8 +2,8 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { RepoController } from '../repo.controller';
 import { RepoService } from '../repo.service';
 import { Repo } from '../repo.entity';
-import { CreateRepoDto } from '../../dto/create-repo.dto';
-import { UpdateRepoDto } from '../../dto/update-repo.dto';
+import { CreateRepoDto } from '../dto/create-repo.dto';
+import { UpdateRepoDto } from '../dto/update-repo.dto';
 
 describe('RepoController', () => {
   let controller: RepoController;

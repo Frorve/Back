@@ -1,7 +1,7 @@
 import { Body, Controller, Delete, Get, Param, Post, Put } from "@nestjs/common";
 import { StaffRepoService } from "./staff-repo.service";
 import { StaffRepo } from "./staff-repo.entity";
-import { StaffRepoDto } from "../dto/create-repo-staff.dto"
+import { StaffRepoDto } from "./dto/create-repo-staff.dto"
 
 @Controller("staff-repo")
 export class StaffRepoController {

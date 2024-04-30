@@ -8,8 +8,8 @@ import {
   HttpStatus,
 } from "@nestjs/common";
 import { AuthService } from "./auth.service";
-import { CreateStaffDto } from "../dto/create-staff.dto";
-import { LoginStaffDto } from "../dto/login-staff.dto";
+import { CreateStaffDto } from "./dto/create-staff.dto";
+import { LoginStaffDto } from "./dto/login-staff.dto";
 import { ApiOperation, ApiResponse } from "@nestjs/swagger";
 
 @Controller("auth")

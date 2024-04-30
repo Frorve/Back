@@ -16,8 +16,8 @@ import { Repo } from "./repo.entity";
 import { FileInterceptor } from "@nestjs/platform-express";
 import { Multer } from "multer";
 import { ApiTags, ApiOperation, ApiResponse, ApiBody } from "@nestjs/swagger";
-import { CreateRepoDto } from "../dto/create-repo.dto";
-import { UpdateRepoDto } from "../dto/update-repo.dto";
+import { CreateRepoDto } from "./dto/create-repo.dto";
+import { UpdateRepoDto } from "./dto/update-repo.dto";
 import { Response } from "express";
 import { Readable } from "typeorm/platform/PlatformTools";
 

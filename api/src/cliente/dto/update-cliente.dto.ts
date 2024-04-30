@@ -1,5 +1,5 @@
 import { ApiProperty } from "@nestjs/swagger";
-import { IsNotEmpty, IsEmail, IsPhoneNumber, IsUrl, IsOptional } from "class-validator";
+import { IsEmail, IsPhoneNumber, IsUrl, IsOptional } from "class-validator";
 
 export class UpdateClienteDto {
   @ApiProperty({ description: "Nombre del cliente" })
