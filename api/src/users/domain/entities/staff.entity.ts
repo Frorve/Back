@@ -1,6 +1,6 @@
 import { Entity, PrimaryGeneratedColumn, Column, OneToMany } from "typeorm";
 import { ApiProperty, ApiTags } from "@nestjs/swagger";
-import { Repo } from "src/repo/repo.entity";
+import { Repo } from "../../../repositorios/domain/entities/repo.entity";
 
 @Entity()
 @ApiTags("Staff")

@@ -1,7 +1,7 @@
 import { Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { Repository } from "typeorm";
-import { Staff } from "./staff.entity";
+import { Staff } from "../domain/entities/staff.entity";
 import { ApiTags, ApiOperation, ApiResponse } from "@nestjs/swagger";
 
 @Injectable()

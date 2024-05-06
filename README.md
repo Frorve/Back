@@ -50,3 +50,6 @@ cd ./api && npm install
 
 ### Añadir Clientes:
 <img src="screenshots/AddCliente.png">
+
+### Añadir Time Entry en Clockify:
+<img src="screenshots/AddTimeEntryClockify.png">

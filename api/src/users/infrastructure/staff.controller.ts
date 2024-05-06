@@ -1,7 +1,7 @@
 import { Controller, Get, Param, Query } from "@nestjs/common";
-import { StaffService } from "./staff.service";
+import { StaffService } from "../application/staff.service";
 import { ApiTags, ApiOperation, ApiResponse, ApiQuery } from "@nestjs/swagger";
-import { Staff } from "./staff.entity";
+import { Staff } from "../domain/entities/staff.entity";
 
 @Controller("staff")
 @ApiTags("Staff")

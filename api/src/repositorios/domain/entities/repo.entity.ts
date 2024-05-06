@@ -5,7 +5,7 @@ import {
   ManyToOne,
 } from "typeorm";
 import { ApiProperty, ApiTags } from "@nestjs/swagger";
-import { Staff } from "src/staff/staff.entity";
+import { Staff } from "../../../users/domain/entities/staff.entity";
 
 @Entity()
 @ApiTags("repo")
