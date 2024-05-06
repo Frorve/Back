@@ -1,27 +1,18 @@
-import { Module } from "@nestjs/common";
+import { MiddlewareConsumer, Module, NestModule } from "@nestjs/common";
 import { TypeOrmModule } from "@nestjs/typeorm";
-import { StaffModule } from "./staff/staff.module";
-import { RepoModule } from "./repo/repo.module";
+import { StaffModule } from "./users/staff.module";
+import { RepoModule } from "./repositorios/repo.module";
 import { AuthModule } from "./auth/auth.module";
 import { StaffRepoModule } from "./staff-repo/staff-repo.module";
-import { ClienteModule } from "./cliente/cliente.module";
+import { ClienteModule } from "./clients/cliente.module";
+import { CONFIG_DATABASE } from "./commons/infrastructure/config-database"
 import * as dotenv from "dotenv";
-import config from "./config";
+import config from "./commons/infrastructure/config";
+import { AuthorizationMiddleware } from "./auth/auth.middleware";
 
 dotenv.config();
 @Module({
-  imports: [
-    TypeOrmModule.forRoot({
-      type: config.dbType,
-      host: config.dbHost,
-      port: config.dbPort,
-      username: config.dbUsername,
-      password: config.dbPassword,
-      database: config.dbDatabase,
-      entities: config.typeormEntities,
-      synchronize: config.typeormSynchronize,
-      migrations: config.typeormMigrations,
-    }),
+  imports: [CONFIG_DATABASE(),
     StaffModule,
     RepoModule,
     AuthModule,
@@ -31,4 +22,8 @@ dotenv.config();
   providers: [StaffModule],
   controllers: [],
 })
-export class AppModule {}
+export class AppModule implements NestModule {
+  configure(consumer: MiddlewareConsumer) {
+    consumer.apply(AuthorizationMiddleware).forRoutes('/main');
+  }
+}

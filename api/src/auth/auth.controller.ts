@@ -6,11 +6,15 @@ import {
   ConflictException,
   HttpCode,
   HttpStatus,
+  Get,
+  UseGuards,
+  Req,
 } from "@nestjs/common";
 import { AuthService } from "./auth.service";
-import { CreateStaffDto } from "./dto/create-staff.dto";
-import { LoginStaffDto } from "./dto/login-staff.dto";
-import { ApiOperation, ApiResponse } from "@nestjs/swagger";
+import { CreateStaffDto } from "../commons/domain/dto/create-staff.dto";
+import { LoginStaffDto } from "../commons/domain/dto/login-staff.dto";
+import { ApiBearerAuth, ApiOperation, ApiResponse } from "@nestjs/swagger";
+import { JwtAuthGuard } from "./jwt-auth.guard";
 
 @Controller("auth")
 export class AuthController {
@@ -57,6 +61,14 @@ export class AuthController {
       }
       throw error;
     }
+  }
+
+  @Get('main')
+  @ApiBearerAuth() // Especifica que se debe utilizar el token JWT como método de autenticación
+  @UseGuards(JwtAuthGuard) // Protege la ruta con el guardia JWT
+  async getMain(@Req() req) {
+    // Esta función se ejecutará solo si el usuario está autenticado correctamente
+    return { message: 'Has accedido a la ruta protegida /main/' };
   }
 
   @Post("verify-token")

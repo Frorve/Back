@@ -4,10 +4,10 @@ import {
   UnauthorizedException,
 } from "@nestjs/common";
 import * as bcrypt from "bcryptjs";
-import { Staff } from "../staff/staff.entity";
+import { Staff } from "../users/domain/entities/staff.entity";
 import * as jwt from "jsonwebtoken";
-import { CreateStaffDto } from "./dto/create-staff.dto";
-import { LoginStaffDto } from "./dto/login-staff.dto";
+import { CreateStaffDto } from "../commons/domain/dto/create-staff.dto";
+import { LoginStaffDto } from "../commons/domain/dto/login-staff.dto";
 import { InjectRepository } from "@nestjs/typeorm";
 import { Repository } from "typeorm";
 import { ApiBody, ApiConflictResponse, ApiOperation } from "@nestjs/swagger";

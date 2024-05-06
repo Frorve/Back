@@ -1,7 +1,7 @@
 import * as dotenv from "dotenv";
 import * as path from "path";
 
-dotenv.config({ path: path.resolve(__dirname, "../.develop.env") });
+dotenv.config({ path: path.resolve(__dirname, "../../../.develop.env") });
 
 interface Config {
   dbType: "postgres";

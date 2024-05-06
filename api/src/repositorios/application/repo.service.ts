@@ -1,10 +1,10 @@
 import { Injectable, NotFoundException } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { FindOneOptions, Like, Repository } from "typeorm";
-import { Repo } from "./repo.entity";
+import { Repo } from "../domain/entities/repo.entity";
 import { ApiBody, ApiOperation, ApiResponse, ApiTags } from "@nestjs/swagger";
-import { CreateRepoDto } from "./dto/create-repo.dto";
-import { UpdateRepoDto } from "./dto/update-repo.dto";
+import { CreateRepoDto } from "../infrastructure/dto/create-repo.dto";
+import { UpdateRepoDto } from "../infrastructure/dto/update-repo.dto";
 
 @Injectable()
 @ApiTags("Repo")

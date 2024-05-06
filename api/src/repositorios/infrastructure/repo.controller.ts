@@ -11,8 +11,8 @@ import {
   Put,
   NotFoundException,
 } from "@nestjs/common";
-import { RepoService } from "./repo.service";
-import { Repo } from "./repo.entity";
+import { RepoService } from "../application/repo.service";
+import { Repo } from "../domain/entities/repo.entity";
 import { FileInterceptor } from "@nestjs/platform-express";
 import { Multer } from "multer";
 import { ApiTags, ApiOperation, ApiResponse, ApiBody } from "@nestjs/swagger";
