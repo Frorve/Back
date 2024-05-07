@@ -19,7 +19,7 @@ docker compose up --build
 cd ./api && npm install
 ```
 
-## Screenshots:
+## Screenshots
 
 ### Register:
 <img src="screenshots/Register.png">

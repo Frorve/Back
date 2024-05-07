@@ -124,4 +124,15 @@ async getCollaboratorRepos(@Param("username") username: string) {
   return this.repoService.getReposForCollaborator(username);
 }
 
+@Get("collaborators/:projectId")
+@ApiOperation({ summary: "Obtener colaboradores de un proyecto por ID" })
+@ApiResponse({
+  status: 200,
+  description: "Colaboradores encontrados",
+  type: [String],
+})
+async getCollaboratorsByProjectId(@Param("projectId") projectId: number) {
+  return this.repoService.getCollaboratorsByProjectId(projectId);
+}
+
 }

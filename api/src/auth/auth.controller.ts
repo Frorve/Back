@@ -64,10 +64,9 @@ export class AuthController {
   }
 
   @Get('main')
-  @ApiBearerAuth() // Especifica que se debe utilizar el token JWT como método de autenticación
-  @UseGuards(JwtAuthGuard) // Protege la ruta con el guardia JWT
+  @ApiBearerAuth()
+  @UseGuards(JwtAuthGuard) 
   async getMain(@Req() req) {
-    // Esta función se ejecutará solo si el usuario está autenticado correctamente
     return { message: 'Has accedido a la ruta protegida /main/' };
   }
 

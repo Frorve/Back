@@ -50,7 +50,7 @@ export class RepoService {
     return savedRepo;
   }
 
-  @ApiOperation({ summary: "Obtener todos los repositorios" })
+  @ApiOperation({ summary: "Obtener todos los repositorios que tenga un usuario" })
   @ApiResponse({
     status: 200,
     description: "Repositorios encontrados",
@@ -119,4 +119,19 @@ async getReposForCollaborator(username: string): Promise<Repo[]> {
   });
 }
 
+async getCollaboratorsByProjectId(projectId: number): Promise<string[]> {
+  const repo = await this.repoRepository.findOne({ where: { id: projectId } });
+  if (!repo) {
+    throw new NotFoundException(`Repo with id ${projectId} not found`);
+  }
+
+  if (!repo.colaboradores) {
+    return [];
+  }
+
+  return repo.colaboradores.split(',');
 }
+
+
+}
+
