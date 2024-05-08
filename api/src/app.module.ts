@@ -8,7 +8,7 @@ import { ClienteModule } from "./clients/cliente.module";
 import { CONFIG_DATABASE } from "./commons/infrastructure/config-database"
 import * as dotenv from "dotenv";
 import config from "./commons/infrastructure/config";
-import { AuthorizationMiddleware } from "./auth/auth.middleware";
+import { AuthorizationMiddleware } from "./auth/application/auth.middleware";
 
 dotenv.config();
 @Module({

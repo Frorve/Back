@@ -10,11 +10,11 @@ import {
   UseGuards,
   Req,
 } from "@nestjs/common";
-import { AuthService } from "./auth.service";
-import { CreateStaffDto } from "../commons/domain/dto/create-staff.dto";
-import { LoginStaffDto } from "../commons/domain/dto/login-staff.dto";
+import { AuthService } from "../application/auth.service";
+import { CreateStaffDto } from "../../commons/domain/dto/create-staff.dto";
+import { LoginStaffDto } from "../../commons/domain/dto/login-staff.dto";
 import { ApiBearerAuth, ApiOperation, ApiResponse } from "@nestjs/swagger";
-import { JwtAuthGuard } from "./jwt-auth.guard";
+import { JwtAuthGuard } from "../application/jwt-auth.guard";
 
 @Controller("auth")
 export class AuthController {

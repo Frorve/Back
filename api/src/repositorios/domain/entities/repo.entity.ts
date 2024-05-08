@@ -54,6 +54,10 @@ export class Repo {
   @ApiProperty({ description: "Nombre del cliente asociado al repositorio" })
   cliente: string;
 
+  @Column({ nullable: true })
+  @ApiProperty({ description: "Duración total en segundos" })
+  time: number;
+
   @ManyToOne(() => Staff, staff => staff.repos)
   staff: Staff;
 

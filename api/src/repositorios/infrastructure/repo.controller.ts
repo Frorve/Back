@@ -24,9 +24,7 @@ import { Readable } from "typeorm/platform/PlatformTools";
 @Controller("repo")
 @ApiTags("Repo")
 export class RepoController {
-  constructor(
-    private repoService: RepoService,
-  ) {}
+  constructor(private repoService: RepoService) {}
 
   @Post(":username")
   @ApiOperation({ summary: "Crear un nuevo repositorio" })
@@ -114,25 +112,38 @@ export class RepoController {
   }
 
   @Get("collaborator-repos/:username")
-@ApiOperation({ summary: "Obtener repositorios en los que el usuario es un colaborador" })
-@ApiResponse({
-  status: 200,
-  description: "Repositorios encontrados",
-  type: [Repo],
-})
-async getCollaboratorRepos(@Param("username") username: string) {
-  return this.repoService.getReposForCollaborator(username);
+  @ApiOperation({
+    summary: "Obtener repositorios en los que el usuario es un colaborador",
+  })
+  @ApiResponse({
+    status: 200,
+    description: "Repositorios encontrados",
+    type: [Repo],
+  })
+  async getCollaboratorRepos(@Param("username") username: string) {
+    return this.repoService.getReposForCollaborator(username);
+  }
+
+  @Get("collaborators/:projectId")
+  @ApiOperation({ summary: "Obtener colaboradores de un proyecto por ID" })
+  @ApiResponse({
+    status: 200,
+    description: "Colaboradores encontrados",
+    type: [String],
+  })
+  async getCollaboratorsByProjectId(@Param("projectId") projectId: number) {
+    return this.repoService.getCollaboratorsByProjectId(projectId);
+  }
+
+  @Get("clients/:projectId")
+  @ApiOperation({ summary: "Obtener clientes de un proyecto por ID" })
+  @ApiResponse({
+    status: 200,
+    description: "Clientes encontrados",
+    type: [String],
+  })
+  async getClientsByProjectId(@Param("projectId") projectId: number) {
+    return this.repoService.getClientsByProjectId(projectId);
+  }
 }
 
-@Get("collaborators/:projectId")
-@ApiOperation({ summary: "Obtener colaboradores de un proyecto por ID" })
-@ApiResponse({
-  status: 200,
-  description: "Colaboradores encontrados",
-  type: [String],
-})
-async getCollaboratorsByProjectId(@Param("projectId") projectId: number) {
-  return this.repoService.getCollaboratorsByProjectId(projectId);
-}
-
-}

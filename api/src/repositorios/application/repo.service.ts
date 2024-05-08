@@ -11,7 +11,7 @@ import { UpdateRepoDto } from "../infrastructure/dto/update-repo.dto";
 export class RepoService {
   constructor(
     @InjectRepository(Repo)
-    private readonly repoRepository: Repository<Repo>,
+    private readonly repoRepository: Repository<Repo>
   ) {}
 
   @ApiOperation({ summary: "Crear un nuevo repositorio" })
@@ -20,7 +20,7 @@ export class RepoService {
   async createRepo(
     createRepoDto: CreateRepoDto,
     username: string,
-    archivo?: Express.Multer.File,
+    archivo?: Express.Multer.File
   ): Promise<Repo> {
     const {
       nombreProyecto,
@@ -50,7 +50,9 @@ export class RepoService {
     return savedRepo;
   }
 
-  @ApiOperation({ summary: "Obtener todos los repositorios que tenga un usuario" })
+  @ApiOperation({
+    summary: "Obtener todos los repositorios que tenga un usuario",
+  })
   @ApiResponse({
     status: 200,
     description: "Repositorios encontrados",
@@ -90,7 +92,14 @@ export class RepoService {
   @ApiResponse({ status: 404, description: "Repositorio no encontrado" })
   @ApiBody({ type: Repo })
   async updateRepo(id: number, updateRepoDto: UpdateRepoDto): Promise<Repo> {
-    const { nombreProyecto, descripcion, fechaFinalizacion, colaboradores, cliente, archivo } = updateRepoDto;
+    const {
+      nombreProyecto,
+      descripcion,
+      fechaFinalizacion,
+      colaboradores,
+      cliente,
+      archivo,
+    } = updateRepoDto;
     const buscar: FindOneOptions<Repo> = { where: { id } };
     const repo: Repo | undefined = await this.repoRepository.findOne(buscar);
 
@@ -104,34 +113,47 @@ export class RepoService {
     repo.colaboradores = colaboradores || repo.colaboradores;
     repo.cliente = cliente || repo.cliente;
 
-    if(archivo) {
+    if (archivo) {
       repo.archivo = archivo.buffer;
     }
 
     return this.repoRepository.save(repo);
   }
 
-async getReposForCollaborator(username: string): Promise<Repo[]> {
-  return this.repoRepository.find({
-    where: [
-      { colaboradores: Like(`%${username}%`) }
-    ]
-  });
-}
-
-async getCollaboratorsByProjectId(projectId: number): Promise<string[]> {
-  const repo = await this.repoRepository.findOne({ where: { id: projectId } });
-  if (!repo) {
-    throw new NotFoundException(`Repo with id ${projectId} not found`);
+  async getReposForCollaborator(username: string): Promise<Repo[]> {
+    return this.repoRepository.find({
+      where: [{ colaboradores: Like(`%${username}%`) }],
+    });
   }
 
-  if (!repo.colaboradores) {
-    return [];
+  async getCollaboratorsByProjectId(projectId: number): Promise<string[]> {
+    const repo = await this.repoRepository.findOne({
+      where: { id: projectId },
+    });
+    if (!repo) {
+      throw new NotFoundException(`Repo with id ${projectId} not found`);
+    }
+
+    if (!repo.colaboradores) {
+      return [];
+    }
+
+    return repo.colaboradores.split(",");
   }
 
-  return repo.colaboradores.split(',');
+  async getClientsByProjectId(projectId: number): Promise<string[]> {
+    const repo = await this.repoRepository.findOne({
+      where: { id: projectId },
+    });
+    if (!repo) {
+      throw new NotFoundException(`Repo with id ${projectId} not found`);
+    }
+
+    if (!repo.cliente) {
+      return [];
+    }
+    
+    return repo.cliente.split(",");
+  }
+
 }
-
-
-}
-

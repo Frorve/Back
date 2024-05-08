@@ -1,4 +1,4 @@
-import { IsString, IsOptional, IsDateString } from "class-validator";
+import { IsString, IsOptional, IsDateString, IsNumber } from "class-validator";
 
 export class UpdateRepoDto {
   @IsString()
@@ -20,6 +20,10 @@ export class UpdateRepoDto {
   @IsString()
   @IsOptional()
   cliente?: string;
+
+  @IsNumber()
+  @IsOptional()
+  time: number
 
   @IsOptional()
   archivo?: Express.Multer.File;

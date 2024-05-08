@@ -1,7 +1,7 @@
 import { Module } from "@nestjs/common";
 import { TypeOrmModule } from "@nestjs/typeorm";
-import { AuthController } from "./auth.controller";
-import { AuthService } from "./auth.service";
+import { AuthController } from "./infrastructure/auth.controller";
+import { AuthService } from "./application/auth.service";
 import { Staff } from "../users/domain/entities/staff.entity";
 import { StaffService } from "../users/application/staff.service";
 

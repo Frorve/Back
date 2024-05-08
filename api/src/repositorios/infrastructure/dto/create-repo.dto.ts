@@ -3,6 +3,7 @@ import {
   IsOptional,
   IsNotEmpty,
   IsDateString,
+  IsNumber,
 } from "class-validator";
 
 export class CreateRepoDto {
@@ -37,4 +38,8 @@ export class CreateRepoDto {
 
   @IsOptional()
   nombreArchivo?: string;
+
+  @IsNumber()
+  @IsOptional()
+  time: number
 }
