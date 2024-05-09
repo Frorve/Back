@@ -156,4 +156,33 @@ export class RepoService {
     return repo.cliente.split(",");
   }
 
+  async updateTimeEntry(
+    id: number,
+    UpdateRepoDto: { time: number}
+  ): Promise<Repo> {
+    const { time } = UpdateRepoDto;
+  
+    const buscar: FindOneOptions<Repo> = { where: { id } };
+    const repo: Repo | undefined = await this.repoRepository.findOne(buscar);
+  
+    if (!repo) {
+      throw new NotFoundException(`Repo with id ${id} not found`);
+    }
+  
+    repo.time = time;
+  
+    return this.repoRepository.save(repo);
+  }
+  
+  async getTimeEntry(id: number): Promise<number> {
+
+    const buscar: FindOneOptions<Repo> = { where: { id } };
+    const repo: Repo | undefined = await this.repoRepository.findOne(buscar);
+    
+      if (!repo) {
+        throw new NotFoundException(`Repo with id ${id} not found`);
+    }
+    return repo.time;
+  }
+
 }

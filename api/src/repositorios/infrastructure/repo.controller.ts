@@ -10,6 +10,7 @@ import {
   Res,
   Put,
   NotFoundException,
+  Patch,
 } from "@nestjs/common";
 import { RepoService } from "../application/repo.service";
 import { Repo } from "../domain/entities/repo.entity";
@@ -60,7 +61,7 @@ export class RepoController {
   }
 
   @Get(":username")
-  @ApiOperation({ summary: "Obtener todos los repositorios" })
+  @ApiOperation({ summary: "Obtener los repositorios por usuario logeado" })
   @ApiResponse({
     status: 200,
     description: "Repositorios encontrados",
@@ -145,5 +146,33 @@ export class RepoController {
   async getClientsByProjectId(@Param("projectId") projectId: number) {
     return this.repoService.getClientsByProjectId(projectId);
   }
+
+  @Patch("time/:id")
+@ApiOperation({ summary: "Actualizar el tiempo de un repositorio por ID" })
+@ApiResponse({
+  status: 200,
+  description: "Tiempo actualizado exitosamente",
+  type: Repo,
+})
+@ApiResponse({ status: 404, description: "Repositorio no encontrado" })
+async updateTimeEntry(
+  @Param("id") id: number,
+  @Body() UpdateRepoDto: { time: number}
+): Promise<Repo> {
+  return this.repoService.updateTimeEntry(id, UpdateRepoDto);
+}
+
+@Get("time/:id")
+@ApiOperation({ summary: "Obtener el tiempo de un repositorio por ID" })
+@ApiResponse({
+  status: 200,
+  description: "Tiempo obtenido exitosamente",
+  type: Repo,
+})
+@ApiResponse({ status: 404, description: "Repositorio no encontrado" })
+async getTimeEntry(@Param("id") id: number): Promise<number> {
+  return this.repoService.getTimeEntry(id);
+}
+
 }
 
