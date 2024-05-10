@@ -8,6 +8,17 @@ NestJs Application Stafko - Beebit | Fran
 
 La aplicación del Backend se ejecutará en: [http://localhost:3000](http://localhost:3000)
 
+## About
+
+Bienvenido a mi aplicación de gestión de proyectos, creada durante el periodo de prácticas en BeeBit en 2024. Esta aplicación te permite administrar proyectos de manera eficiente, colaborar con tu equipo, y gestionar el tiempo con la integración de Clockify.
+
+Funcionalidades destacadas:
+
+- Registro de usuarios y autenticación segura.
+- Subida y gestión de proyectos.
+- Integración con la API de Clockify para registrar tiempo.
+- Posibilidad de añadir colaboradores y clientes a proyectos.
+
 ## Init
 ### Ejecutar el contenedor:
 ```bash

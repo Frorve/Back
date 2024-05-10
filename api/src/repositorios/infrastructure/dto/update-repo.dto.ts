@@ -25,6 +25,10 @@ export class UpdateRepoDto {
   @IsOptional()
   time: number
 
+  @IsString()
+  @IsOptional()
+  nombreArchivo?: string;
+
   @IsOptional()
   archivo?: Express.Multer.File;
 }

@@ -99,6 +99,7 @@ export class RepoService {
       colaboradores,
       cliente,
       archivo,
+      nombreArchivo,
     } = updateRepoDto;
     const buscar: FindOneOptions<Repo> = { where: { id } };
     const repo: Repo | undefined = await this.repoRepository.findOne(buscar);
@@ -112,6 +113,7 @@ export class RepoService {
     repo.fechaFinalizacion = fechaFinalizacion || repo.fechaFinalizacion;
     repo.colaboradores = colaboradores || repo.colaboradores;
     repo.cliente = cliente || repo.cliente;
+    repo.nombreArchivo = nombreArchivo || repo.nombreArchivo;
 
     if (archivo) {
       repo.archivo = archivo.buffer;
@@ -178,7 +180,7 @@ export class RepoService {
 
     const buscar: FindOneOptions<Repo> = { where: { id } };
     const repo: Repo | undefined = await this.repoRepository.findOne(buscar);
-    
+
       if (!repo) {
         throw new NotFoundException(`Repo with id ${id} not found`);
     }

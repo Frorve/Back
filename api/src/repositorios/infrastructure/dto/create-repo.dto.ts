@@ -36,6 +36,7 @@ export class CreateRepoDto {
   @IsOptional()
   archivo?: Express.Multer.File;
 
+  @IsString()
   @IsOptional()
   nombreArchivo?: string;
 
