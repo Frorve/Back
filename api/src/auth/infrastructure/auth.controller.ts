@@ -13,10 +13,19 @@ import {
 import { AuthService } from "../application/auth.service";
 import { CreateStaffDto } from "../../commons/domain/dto/create-staff.dto";
 import { LoginStaffDto } from "../../commons/domain/dto/login-staff.dto";
-import { ApiBearerAuth, ApiOperation, ApiResponse } from "@nestjs/swagger";
+import {
+  ApiBearerAuth,
+  ApiOperation,
+  ApiResponse,
+  ApiBadRequestResponse,
+  ApiConflictResponse,
+  ApiUnauthorizedResponse,
+  ApiTags,
+} from "@nestjs/swagger";
 import { JwtAuthGuard } from "../application/jwt-auth.guard";
 
 @Controller("auth")
+@ApiTags("Auth")
 export class AuthController {
   constructor(private readonly authService: AuthService) {}
 
@@ -24,7 +33,7 @@ export class AuthController {
   @Post("login")
   @ApiOperation({ summary: "Iniciar sesión del personal" })
   @ApiResponse({ status: 200, description: "Inicio de sesión exitoso" })
-  @ApiResponse({ status: 401, description: "Credenciales incorrectas" })
+  @ApiUnauthorizedResponse({ description: "Credenciales incorrectas" })
   async login(@Body() loginStaffDto: LoginStaffDto) {
     const token = await this.authService.login(loginStaffDto);
 
@@ -37,12 +46,11 @@ export class AuthController {
       token: token,
     };
   }
-  
+
   @Post("register")
   @ApiOperation({ summary: "Crear nuevo personal" })
   @ApiResponse({ status: 201, description: "Personal creado exitosamente" })
-  @ApiResponse({
-    status: 409,
+  @ApiConflictResponse({
     description: "El nombre de usuario o correo electrónico ya están en uso",
   })
   async register(@Body() createStaffDto: CreateStaffDto) {
@@ -63,14 +71,22 @@ export class AuthController {
     }
   }
 
-  @Get('main')
+  @Get("main")
   @ApiBearerAuth()
-  @UseGuards(JwtAuthGuard) 
+  @UseGuards(JwtAuthGuard)
+  @ApiOperation({ summary: "Acceder a la ruta protegida /main/" })
+  @ApiResponse({
+    status: 200,
+    description: "Has accedido a la ruta protegida /main/",
+  })
   async getMain(@Req() req) {
-    return { message: 'Has accedido a la ruta protegida /main/' };
+    return { message: "Has accedido a la ruta protegida /main/" };
   }
 
   @Post("verify-token")
+  @ApiOperation({ summary: "Verificar token" })
+  @ApiResponse({ status: 200, description: "Token válido" })
+  @ApiUnauthorizedResponse({ description: "Token inválido" })
   async verifyToken(@Body() { token }: { token: string }) {
     try {
       const decoded = await this.authService.verifyToken(token);

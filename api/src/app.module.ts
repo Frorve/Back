@@ -1,5 +1,4 @@
 import { MiddlewareConsumer, Module, NestModule } from "@nestjs/common";
-import { TypeOrmModule } from "@nestjs/typeorm";
 import { StaffModule } from "./users/staff.module";
 import { RepoModule } from "./repositorios/repo.module";
 import { AuthModule } from "./auth/auth.module";

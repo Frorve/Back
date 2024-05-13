@@ -2,28 +2,18 @@ import { Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { Repository } from "typeorm";
 import { Staff } from "../domain/entities/staff.entity";
-import { ApiTags, ApiOperation, ApiResponse } from "@nestjs/swagger";
 
 @Injectable()
-@ApiTags("Staff")
 export class StaffService {
   constructor(
     @InjectRepository(Staff)
     private readonly staffRepository: Repository<Staff>
   ) {}
 
-  @ApiOperation({ summary: "Obtener todos los usuarios" })
-  @ApiResponse({ status: 200, description: "Lista de usuarios", type: [Staff] })
   async getAllStaff(): Promise<Staff[]> {
     return this.staffRepository.find();
   }
 
-  @ApiOperation({ summary: "Buscar usuarios por nombre o correo electrónico" })
-  @ApiResponse({
-    status: 200,
-    description: "Usuarios encontrados",
-    type: [Staff],
-  })
   async searchStaff(query: string): Promise<Staff[]> {
     return this.staffRepository
       .createQueryBuilder("staff")
@@ -36,15 +26,6 @@ export class StaffService {
 
   async findByUsername(username: string): Promise<Staff> {
     return this.staffRepository.findOne({ where: { nombre: username } });
-  }
-
-  @ApiOperation({ summary: "Obtener todos los usuarios" })
-  @ApiResponse({ status: 200, description: "Lista de usuarios", type: [Staff] })
-  async getOneStaff(currentUser: Staff): Promise<Staff[]> {
-    return await this.staffRepository.find({
-      where: { id: currentUser.id },
-      relations: ["repos"],
-    });
   }
 
   async getStaffWithReposById(id: number): Promise<Staff | undefined> {

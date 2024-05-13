@@ -8,36 +8,32 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.AppModule = void 0;
 const common_1 = require("@nestjs/common");
-const typeorm_1 = require("@nestjs/typeorm");
-const poll_entity_1 = require("./poll/poll.entity");
-const poll_service_1 = require("./poll/poll.service");
-const poll_controller_1 = require("./poll/poll.controller");
-const staff_entity_1 = require("./staff/staff.entity");
-const staff_service_1 = require("./staff/staff.service");
-const staff_controller_1 = require("./staff/staff.controller");
-const repo_entity_1 = require("./repo/repo.entity");
-const repo_service_1 = require("./repo/repo.service");
-const repo_controller_1 = require("./repo/repo.controller");
+const staff_module_1 = require("./users/staff.module");
+const repo_module_1 = require("./repositorios/repo.module");
+const auth_module_1 = require("./auth/auth.module");
+const staff_repo_module_1 = require("./staff-repo/staff-repo.module");
+const cliente_module_1 = require("./clients/cliente.module");
+const config_database_1 = require("./commons/infrastructure/config-database");
+const dotenv = require("dotenv");
+const auth_middleware_1 = require("./auth/application/auth.middleware");
+dotenv.config();
 let AppModule = class AppModule {
+    configure(consumer) {
+        consumer.apply(auth_middleware_1.AuthorizationMiddleware).forRoutes('/main');
+    }
 };
 exports.AppModule = AppModule;
 exports.AppModule = AppModule = __decorate([
     (0, common_1.Module)({
-        imports: [
-            typeorm_1.TypeOrmModule.forRoot({
-                type: 'postgres',
-                host: 'localhost',
-                port: 5432,
-                username: 'user',
-                password: 'password',
-                database: 'dbname',
-                entities: [staff_entity_1.Staff, poll_entity_1.Poll, repo_entity_1.Repo],
-                synchronize: true,
-            }),
-            typeorm_1.TypeOrmModule.forFeature([poll_entity_1.Poll, staff_entity_1.Staff, repo_entity_1.Repo]),
+        imports: [(0, config_database_1.CONFIG_DATABASE)(),
+            staff_module_1.StaffModule,
+            repo_module_1.RepoModule,
+            auth_module_1.AuthModule,
+            staff_repo_module_1.StaffRepoModule,
+            cliente_module_1.ClienteModule,
         ],
-        providers: [poll_service_1.PollService, staff_service_1.StaffService, repo_service_1.RepoService],
-        controllers: [poll_controller_1.PollController, staff_controller_1.StaffController, repo_controller_1.RepoController],
+        providers: [staff_module_1.StaffModule],
+        controllers: [],
     })
 ], AppModule);
 //# sourceMappingURL=app.module.js.map

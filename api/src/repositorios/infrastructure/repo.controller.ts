@@ -41,6 +41,9 @@ export class RepoController {
   }
 
   @Get("download/:id")
+  @ApiOperation({
+    summary: "Descargar el archivo asociado al ID de un proyecto",
+  })
   async downloadFile(
     @Param("id") id: number,
     @Res() res: Response
@@ -148,31 +151,29 @@ export class RepoController {
   }
 
   @Patch("time/:id")
-@ApiOperation({ summary: "Actualizar el tiempo de un repositorio por ID" })
-@ApiResponse({
-  status: 200,
-  description: "Tiempo actualizado exitosamente",
-  type: Repo,
-})
-@ApiResponse({ status: 404, description: "Repositorio no encontrado" })
-async updateTimeEntry(
-  @Param("id") id: number,
-  @Body() UpdateRepoDto: { time: number}
-): Promise<Repo> {
-  return this.repoService.updateTimeEntry(id, UpdateRepoDto);
-}
+  @ApiOperation({ summary: "Actualizar el tiempo de un repositorio por ID" })
+  @ApiResponse({
+    status: 200,
+    description: "Tiempo actualizado exitosamente",
+    type: Repo,
+  })
+  @ApiResponse({ status: 404, description: "Repositorio no encontrado" })
+  async updateTimeEntry(
+    @Param("id") id: number,
+    @Body() UpdateRepoDto: { time: number }
+  ): Promise<Repo> {
+    return this.repoService.updateTimeEntry(id, UpdateRepoDto);
+  }
 
-@Get("time/:id")
-@ApiOperation({ summary: "Obtener el tiempo de un repositorio por ID" })
-@ApiResponse({
-  status: 200,
-  description: "Tiempo obtenido exitosamente",
-  type: Repo,
-})
-@ApiResponse({ status: 404, description: "Repositorio no encontrado" })
-async getTimeEntry(@Param("id") id: number): Promise<number> {
-  return this.repoService.getTimeEntry(id);
+  @Get("time/:id")
+  @ApiOperation({ summary: "Obtener el tiempo de un repositorio por ID" })
+  @ApiResponse({
+    status: 200,
+    description: "Tiempo obtenido exitosamente",
+    type: Repo,
+  })
+  @ApiResponse({ status: 404, description: "Repositorio no encontrado" })
+  async getTimeEntry(@Param("id") id: number): Promise<number> {
+    return this.repoService.getTimeEntry(id);
+  }
 }
-
-}
-

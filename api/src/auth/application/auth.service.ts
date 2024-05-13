@@ -10,7 +10,6 @@ import { CreateStaffDto } from "../../commons/domain/dto/create-staff.dto";
 import { LoginStaffDto } from "../../commons/domain/dto/login-staff.dto";
 import { InjectRepository } from "@nestjs/typeorm";
 import { Repository } from "typeorm";
-import { ApiBody, ApiConflictResponse, ApiOperation } from "@nestjs/swagger";
 import { JwtPayload } from "../infrastructure/jwt-payload.interface";
 
 @Injectable()
@@ -22,11 +21,6 @@ export class AuthService {
     private readonly staffRepository: Repository<Staff>
   ) {}
 
-  @ApiOperation({ summary: "Crear un nuevo usuario" })
-  @ApiConflictResponse({
-    description: "El nombre de usuario o correo electrónico ya están en uso",
-  })
-  @ApiBody({ type: Staff })
   async registerUser(createStaffDto: CreateStaffDto): Promise<Staff> {
     const { nombre, cargo, correoElectronico, contraseña } = createStaffDto;
     const existingUser = await this.staffRepository.findOne({
@@ -51,7 +45,9 @@ export class AuthService {
 
   async login(loginStaffDto: LoginStaffDto): Promise<string | null> {
     const { nombre, contraseña } = loginStaffDto;
-    const user = await this.staffRepository.findOne({ where: { nombre: nombre } });
+    const user = await this.staffRepository.findOne({
+      where: { nombre: nombre },
+    });
 
     if (!user) {
       throw new UnauthorizedException("Credenciales incorrectas");
@@ -63,13 +59,15 @@ export class AuthService {
       throw new UnauthorizedException("Credenciales incorrectas");
     }
 
-    const payload: JwtPayload = { nombre: user.nombre, cargo: user.cargo, correoElectronico:user.correoElectronico }; // Define los datos que deseas incluir en el token
-    const token = jwt.sign(payload, this.JWT_SECRET, { expiresIn: "300h" }); // Genera el token con una duración de 300 horas
+    const payload: JwtPayload = {
+      nombre: user.nombre,
+      cargo: user.cargo,
+      correoElectronico: user.correoElectronico,
+    };
+    const token = jwt.sign(payload, this.JWT_SECRET, { expiresIn: "300h" });
 
     return token;
   }
-
-  
 
   async verifyToken(token: string): Promise<any> {
     try {
