@@ -8,32 +8,23 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.AppModule = void 0;
 const common_1 = require("@nestjs/common");
-const staff_module_1 = require("./users/staff.module");
-const repo_module_1 = require("./repositorios/repo.module");
-const auth_module_1 = require("./auth/auth.module");
-const staff_repo_module_1 = require("./staff-repo/staff-repo.module");
-const cliente_module_1 = require("./clients/cliente.module");
-const config_database_1 = require("./commons/infrastructure/config-database");
-const dotenv = require("dotenv");
-const auth_middleware_1 = require("./auth/application/auth.middleware");
-dotenv.config();
+const clients_module_1 = require("./clients-service/src/clients.module");
+const repo_module_1 = require("./repositorios-service/src/repo.module");
+const staff_module_1 = require("./staff-service/src/staff.module");
+const auth_module_1 = require("./auth-service/src/auth.module");
 let AppModule = class AppModule {
-    configure(consumer) {
-        consumer.apply(auth_middleware_1.AuthorizationMiddleware).forRoutes('/main');
-    }
 };
 exports.AppModule = AppModule;
 exports.AppModule = AppModule = __decorate([
     (0, common_1.Module)({
-        imports: [(0, config_database_1.CONFIG_DATABASE)(),
-            staff_module_1.StaffModule,
+        imports: [
+            clients_module_1.ClientsModule,
             repo_module_1.RepoModule,
+            staff_module_1.StaffModule,
             auth_module_1.AuthModule,
-            staff_repo_module_1.StaffRepoModule,
-            cliente_module_1.ClienteModule,
         ],
-        providers: [staff_module_1.StaffModule],
         controllers: [],
+        providers: [],
     })
 ], AppModule);
 //# sourceMappingURL=app.module.js.map

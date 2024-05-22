@@ -1,28 +1,17 @@
-import { MiddlewareConsumer, Module, NestModule } from "@nestjs/common";
-import { StaffModule } from "./users/staff.module";
-import { RepoModule } from "./repositorios/repo.module";
-import { AuthModule } from "./auth/auth.module";
-import { StaffRepoModule } from "./staff-repo/staff-repo.module";
-import { ClienteModule } from "./clients/cliente.module";
-import { CONFIG_DATABASE } from "./commons/infrastructure/config-database"
-import * as dotenv from "dotenv";
-import config from "./commons/infrastructure/config";
-import { AuthorizationMiddleware } from "./auth/application/auth.middleware";
+import { Module } from '@nestjs/common';
+import { ClientsModule } from './clients-service/src/clients.module';
+import { RepoModule } from './repositorios-service/src/repo.module';
+import { StaffModule } from './staff-service/src/staff.module';
+import { AuthModule } from './auth-service/src/auth.module';
 
-dotenv.config();
 @Module({
-  imports: [CONFIG_DATABASE(),
-    StaffModule,
+  imports: [
+    ClientsModule,
     RepoModule,
+    StaffModule,
     AuthModule,
-    StaffRepoModule,
-    ClienteModule,
   ],
-  providers: [StaffModule],
   controllers: [],
+  providers: [],
 })
-export class AppModule implements NestModule {
-  configure(consumer: MiddlewareConsumer) {
-    consumer.apply(AuthorizationMiddleware).forRoutes('/main');
-  }
-}
+export class AppModule {}

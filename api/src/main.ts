@@ -1,45 +1,46 @@
-import { NestFactory } from "@nestjs/core";
-import { AppModule } from "./app.module";
-import { DocumentBuilder, SwaggerModule } from "@nestjs/swagger";
-import * as cors from "cors";
-import { ValidationPipe } from "@nestjs/common";
-import * as dotenv from "dotenv";
+import { NestFactory } from '@nestjs/core';
+import { AppModule } from './app.module';
+import { Transport, MicroserviceOptions } from '@nestjs/microservices';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
 
-  dotenv.config({ path: ".develop.env" });
+  const microserviceOptions: MicroserviceOptions[] = [
+    {
+      transport: Transport.TCP,
+      options: {
+        host: '127.0.0.1',
+        port: 3001,
+      },
+    },
+    {
+      transport: Transport.TCP,
+      options: {
+        host: '127.0.0.1',
+        port: 3002,
+      },
+    },
+    {
+      transport: Transport.TCP,
+      options: {
+        host: '127.0.0.1',
+        port: 3003,
+      },
+    },
+    {
+      transport: Transport.TCP,
+      options: {
+        host: '127.0.0.1',
+        port: 3004,
+      },
+    },
+  ];
 
-  app.use(
-    cors({
-      origin: process.env.APP_CORS,
-      credentials: true,
-    })
-  );
+  for (const options of microserviceOptions) {
+    app.connectMicroservice(options);
+  }
 
-  app.setGlobalPrefix("api/v1");
-
-  app.useGlobalPipes(
-    new ValidationPipe({
-      whitelist: true,
-      transform: true,
-      forbidNonWhitelisted: true,
-    })
-  );
-
-  const options = new DocumentBuilder()
-    .setTitle("API Stafko - Fran Ortega")
-    .setDescription(
-      'Documentación de la API usada para el proyecto de prácticas en BeeBit llamado "Stafko"'
-    )
-    .setVersion("1.0")
-    .build();
-
-  const document = SwaggerModule.createDocument(app, options);
-
-  SwaggerModule.setup("api", app, document);
-
-  await app.listen(process.env.APP_PORT);
+  await app.startAllMicroservices();
+  await app.listen(3000);
 }
-
 bootstrap();
