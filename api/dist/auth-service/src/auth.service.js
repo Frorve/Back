@@ -9,9 +9,19 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.AuthService = void 0;
 const common_1 = require("@nestjs/common");
 const axios_1 = require("axios");
+const dotenv = require("dotenv");
+dotenv.config({ path: ".develop.env" });
 let AuthService = class AuthService {
+    constructor() {
+        this.baseUrl = `${process.env.DIRECTUS_URL_AUTH}`;
+        this.baseUrlReg = `${process.env.DIRECTUS_URL_AUTH_REGISTER}`;
+    }
     async login(credentials) {
-        const response = await axios_1.default.post('http://localhost:8055/auth/login', credentials);
+        const response = await axios_1.default.post(this.baseUrl, credentials);
+        return response.data;
+    }
+    async register(credentials) {
+        const response = await axios_1.default.post(this.baseUrlReg, credentials);
         return response.data;
     }
 };

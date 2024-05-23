@@ -12,6 +12,7 @@ const clients_module_1 = require("./clients-service/src/clients.module");
 const repo_module_1 = require("./repositorios-service/src/repo.module");
 const staff_module_1 = require("./staff-service/src/staff.module");
 const auth_module_1 = require("./auth-service/src/auth.module");
+const user_module_1 = require("./user-service/src/user.module");
 let AppModule = class AppModule {
 };
 exports.AppModule = AppModule;
@@ -22,6 +23,7 @@ exports.AppModule = AppModule = __decorate([
             repo_module_1.RepoModule,
             staff_module_1.StaffModule,
             auth_module_1.AuthModule,
+            user_module_1.UserModule,
         ],
         controllers: [],
         providers: [],

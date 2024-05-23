@@ -8,16 +8,26 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
+var __param = (this && this.__param) || function (paramIndex, decorator) {
+    return function (target, key) { decorator(target, key, paramIndex); }
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.StaffController = void 0;
 const common_1 = require("@nestjs/common");
 const staff_service_1 = require("./staff.service");
+const create_staff_dto_1 = require("./dto/create-staff.dto");
 let StaffController = class StaffController {
     constructor(staffService) {
         this.staffService = staffService;
     }
     findAll() {
         return this.staffService.findAll();
+    }
+    create(createStaffDto) {
+        return this.staffService.create(createStaffDto);
+    }
+    findAllByName() {
+        return this.staffService.findAllByName();
     }
 };
 exports.StaffController = StaffController;
@@ -27,6 +37,19 @@ __decorate([
     __metadata("design:paramtypes", []),
     __metadata("design:returntype", void 0)
 ], StaffController.prototype, "findAll", null);
+__decorate([
+    (0, common_1.Post)(),
+    __param(0, (0, common_1.Body)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [create_staff_dto_1.CreateStaffDto]),
+    __metadata("design:returntype", void 0)
+], StaffController.prototype, "create", null);
+__decorate([
+    (0, common_1.Get)('/name'),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", []),
+    __metadata("design:returntype", void 0)
+], StaffController.prototype, "findAllByName", null);
 exports.StaffController = StaffController = __decorate([
     (0, common_1.Controller)('staff'),
     __metadata("design:paramtypes", [staff_service_1.StaffService])

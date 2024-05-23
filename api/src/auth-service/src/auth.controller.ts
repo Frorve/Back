@@ -10,5 +10,10 @@ export class AuthController {
     return this.authService.login(credentials);
   }
 
+  @Post('register')
+  register(@Body() credentials: any) {
+    return this.authService.register(credentials);
+  }
+
 }
 

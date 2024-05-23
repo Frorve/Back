@@ -9,9 +9,22 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.StaffService = void 0;
 const common_1 = require("@nestjs/common");
 const axios_1 = require("axios");
+const dotenv = require("dotenv");
+dotenv.config({ path: ".develop.env" });
 let StaffService = class StaffService {
+    constructor() {
+        this.baseUrl = `${process.env.DIRECTUS_URL_STAFF}`;
+    }
     async findAll() {
-        const response = await axios_1.default.get('http://localhost:8055/items/staff');
+        const response = await axios_1.default.get(this.baseUrl);
+        return response.data;
+    }
+    async create(createStaffDto) {
+        const response = await axios_1.default.post(this.baseUrl, createStaffDto);
+        return response.data;
+    }
+    async findAllByName() {
+        const response = await axios_1.default.get(`${this.baseUrl}?fields=nombre`);
         return response.data;
     }
 };
