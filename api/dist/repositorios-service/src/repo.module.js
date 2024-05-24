@@ -8,14 +8,17 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.RepoModule = void 0;
 const common_1 = require("@nestjs/common");
-const repo_service_1 = require("./repo.service");
-const repo_controller_1 = require("./repo.controller");
+const repo_service_1 = require("./application/repo.service");
+const repo_controller_1 = require("./infrastructure/repo.controller");
+const directus_service_1 = require("../../directus/src/application/directus.service");
+const directus_module_1 = require("../../directus/src/directus.module");
 let RepoModule = class RepoModule {
 };
 exports.RepoModule = RepoModule;
 exports.RepoModule = RepoModule = __decorate([
     (0, common_1.Module)({
-        providers: [repo_service_1.RepoService],
+        imports: [directus_module_1.DirectusModule],
+        providers: [repo_service_1.RepoService, directus_service_1.DirectusService],
         controllers: [repo_controller_1.RepoController],
     })
 ], RepoModule);

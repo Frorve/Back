@@ -1,78 +1,25 @@
-version: '3.8'
+version: "3"
 services:
-  auth-service:
-    build:
-      context: ./services/auth-service
-      dockerfile: Dockerfile
-    ports:
-      - "3001:3001"
-    depends_on:
-      - db
+  database:
+    image: postgres:latest
     environment:
-      DATABASE_URL: postgres://user:password@db:5432/auth_db
-
-  clients-service:
-    build:
-      context: ./services/clients-service
-      dockerfile: Dockerfile
-    ports:
-      - "3002:3002"
-    depends_on:
-      - db
-    environment:
-      DATABASE_URL: postgres://user:password@db:5432/clients_db
-
-  repositorios-service:
-    build:
-      context: ./services/repositorios-service
-      dockerfile: Dockerfile
-    ports:
-      - "3003:3003"
-    depends_on:
-      - db
-    environment:
-      DATABASE_URL: postgres://user:password@db:5432/repos_db
-
-  staff-repo-service:
-    build:
-      context: ./services/staff-repo-service
-      dockerfile: Dockerfile
-    ports:
-      - "3004:3004"
-    depends_on:
-      - db
-    environment:
-      DATABASE_URL: postgres://user:password@db:5432/staff_repo_db
-
-  db:
-    image: postgres:13
-    ports:
-      - "5432:5432"
-    environment:
-      POSTGRES_USER: user
-      POSTGRES_PASSWORD: password
-      POSTGRES_DB: auth_db
+      - POSTGRES_DB
+      - POSTGRES_USER
+      - POSTGRES_PASSWORD
     volumes:
       - postgres_data:/var/lib/postgresql/data
+      - ./database:/backup 
 
   directus:
-    image: directus/directus:latest
+    image: frorve/directus:10.10.5
     ports:
-      - "8055:8055"
-    environment:
-      POSTGRES_DB: directus
-      POSTGRES_USER: directus
-      POSTGRES_PASSWORD: directus
-      KEY: stafko
-      SECRET: beebit
-      ADMIN_EMAIL: admin@example.com
-      ADMIN_PASSWORD: d1r3ctu5
-    depends_on:
-      - db
+      - 8055:8055
     volumes:
       - ./database:/directus/database
       - ./uploads:/directus/uploads
       - ./extensions:/directus/extensions
+    env_file:
+      - ./api/.develop.env
 
 volumes:
   postgres_data:

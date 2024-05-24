@@ -13,6 +13,7 @@ const repo_module_1 = require("./repositorios-service/src/repo.module");
 const staff_module_1 = require("./staff-service/src/staff.module");
 const auth_module_1 = require("./auth-service/src/auth.module");
 const user_module_1 = require("./user-service/src/user.module");
+const directus_module_1 = require("./directus/src/directus.module");
 let AppModule = class AppModule {
 };
 exports.AppModule = AppModule;
@@ -24,6 +25,7 @@ exports.AppModule = AppModule = __decorate([
             staff_module_1.StaffModule,
             auth_module_1.AuthModule,
             user_module_1.UserModule,
+            directus_module_1.DirectusModule,
         ],
         controllers: [],
         providers: [],

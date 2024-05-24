@@ -4,6 +4,7 @@ import { RepoModule } from './repositorios-service/src/repo.module';
 import { StaffModule } from './staff-service/src/staff.module';
 import { AuthModule } from './auth-service/src/auth.module';
 import { UserModule } from './user-service/src/user.module';
+import { DirectusModule } from './directus/src/directus.module';
 
 @Module({
   imports: [
@@ -12,6 +13,7 @@ import { UserModule } from './user-service/src/user.module';
     StaffModule,
     AuthModule,
     UserModule,
+    DirectusModule,
   ],
   controllers: [],
   providers: [],

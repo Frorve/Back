@@ -1,6 +1,7 @@
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import * as cors from "cors";
+import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
 import * as dotenv from "dotenv";
 import { Transport, MicroserviceOptions } from '@nestjs/microservices';
 
@@ -57,6 +58,18 @@ async function bootstrap() {
       credentials: true,
     })
   );
+
+  const config = new DocumentBuilder()
+  .setTitle("API Stafko | Directus | Microservicios - Fran Ortega")
+  .setDescription(
+    'Documentación de la API con Directus + Microservicios usada para el proyecto de prácticas en BeeBit llamado "Stafko"'
+    )
+  .setVersion('1.0')
+  .build();
+
+const document = SwaggerModule.createDocument(app, config);
+
+SwaggerModule.setup("api", app, document);
 
   await app.startAllMicroservices();
   await app.listen(3000);
