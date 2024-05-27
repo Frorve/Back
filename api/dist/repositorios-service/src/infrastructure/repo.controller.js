@@ -44,19 +44,19 @@ let RepoController = class RepoController {
         return this.repoService.getTimeByProject(id);
     }
     async UpdateTimeByProject(id, updateRepoDto) {
-        return this.repoService.UpdateTimeByProject(id, updateRepoDto);
+        return this.repoService.updateTimeByProject(id, updateRepoDto);
     }
     async getCollaboratorByRepo(id) {
         return this.repoService.getCollaboratorByRepo(id);
     }
     async UpdateCollaboratorByRepo(id, updateRepoDto) {
-        return this.repoService.UpdateCollaboratorByRepo(id, updateRepoDto);
+        return this.repoService.updateCollaboratorByRepo(id, updateRepoDto);
     }
     async getClientsByRepo(id) {
         return this.repoService.getClientsByRepo(id);
     }
     async UpdateClientByRepo(id, updateRepoDto) {
-        return this.repoService.UpdateClientByRepo(id, updateRepoDto);
+        return this.repoService.updateClientByRepo(id, updateRepoDto);
     }
 };
 exports.RepoController = RepoController;

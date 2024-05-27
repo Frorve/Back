@@ -16,13 +16,15 @@ exports.DirectusController = void 0;
 const common_1 = require("@nestjs/common");
 const swagger_1 = require("@nestjs/swagger");
 const directus_service_1 = require("../application/directus.service");
+const global_service_1 = require("../application/global.service");
 let DirectusController = class DirectusController {
     constructor(directusService) {
         this.directusService = directusService;
     }
-    async receiveToken(token) {
-        console.log("Token received in controller:", token);
-        this.directusService.setToken(token);
+    async login(body) {
+        const token = body.token;
+        global_service_1.GlobalService.token = token;
+        return { message: 'Token set successfully' };
     }
 };
 exports.DirectusController = DirectusController;
@@ -30,11 +32,11 @@ __decorate([
     (0, common_1.Post)("token"),
     (0, swagger_1.ApiBody)({ description: "Token recibido", type: String }),
     (0, swagger_1.ApiResponse)({ status: 200, description: "Token recibido exitosamente" }),
-    __param(0, (0, common_1.Body)("token")),
+    __param(0, (0, common_1.Body)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [String]),
+    __metadata("design:paramtypes", [Object]),
     __metadata("design:returntype", Promise)
-], DirectusController.prototype, "receiveToken", null);
+], DirectusController.prototype, "login", null);
 exports.DirectusController = DirectusController = __decorate([
     (0, swagger_1.ApiTags)("Directus"),
     (0, common_1.Controller)("directus"),

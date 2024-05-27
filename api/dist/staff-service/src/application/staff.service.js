@@ -10,10 +10,15 @@ exports.StaffService = void 0;
 const common_1 = require("@nestjs/common");
 const axios_1 = require("axios");
 const dotenv = require("dotenv");
+const global_service_1 = require("../../../directus/src/application/global.service");
 dotenv.config({ path: ".develop.env" });
 let StaffService = class StaffService {
     constructor() {
         this.baseUrl = `${process.env.DIRECTUS_URL_STAFF}`;
+    }
+    getAuthHeader() {
+        const token = global_service_1.GlobalService.token;
+        return { Authorization: `Bearer ${token}` };
     }
     async findAll() {
         const response = await axios_1.default.get(this.baseUrl);
@@ -24,7 +29,10 @@ let StaffService = class StaffService {
         return response.data;
     }
     async findAllByName() {
-        const response = await axios_1.default.get(`${this.baseUrl}?fields=nombre`);
+        const config = {
+            headers: this.getAuthHeader(),
+        };
+        const response = await axios_1.default.get(`${this.baseUrl}?fields=nombre`, config);
         return response.data;
     }
 };

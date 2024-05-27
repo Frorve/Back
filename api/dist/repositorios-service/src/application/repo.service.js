@@ -16,56 +16,97 @@ exports.RepoService = void 0;
 const common_1 = require("@nestjs/common");
 const axios_1 = require("axios");
 const update_repo_dto_1 = require("../infrastructure/dto/update-repo.dto");
+const global_service_1 = require("../../../directus/src/application/global.service");
 let RepoService = class RepoService {
     constructor() {
         this.baseUrl = `${process.env.DIRECTUS_URL_REPO}`;
     }
+    getAuthHeader() {
+        const token = global_service_1.GlobalService.token;
+        return { Authorization: `Bearer ${token}` };
+    }
     async findAll() {
-        const response = await axios_1.default.get(this.baseUrl);
+        const config = {
+            headers: this.getAuthHeader(),
+        };
+        const response = await axios_1.default.get(this.baseUrl, config);
         return response.data;
     }
     async create(createRepoDto) {
-        const response = await axios_1.default.post(this.baseUrl, createRepoDto);
+        const config = {
+            headers: this.getAuthHeader(),
+        };
+        const response = await axios_1.default.post(this.baseUrl, createRepoDto, config);
         return response.data;
     }
     async update(id, updateRepoDto) {
-        const response = await axios_1.default.patch(`${this.baseUrl}/${id}`, updateRepoDto);
+        const config = {
+            headers: this.getAuthHeader(),
+        };
+        const response = await axios_1.default.patch(`${this.baseUrl}/${id}`, updateRepoDto, config);
         return response.data;
     }
     async delete(id) {
-        const response = await axios_1.default.delete(`${this.baseUrl}/${id}`);
+        const config = {
+            headers: this.getAuthHeader(),
+        };
+        const response = await axios_1.default.delete(`${this.baseUrl}/${id}`, config);
         return response.data;
     }
     async getReposByAuthor(username) {
-        const response = await axios_1.default.get(`${this.baseUrl}?fields=*.*&filter={"autor":{"_eq":"${username}"}}`);
+        const config = {
+            headers: this.getAuthHeader(),
+        };
+        const response = await axios_1.default.get(`${this.baseUrl}?fields=*.*&filter={"autor":{"_eq":"${username}"}}`, config);
         return response.data;
     }
     async getReposByCollaborator(username) {
-        const response = await axios_1.default.get(`${this.baseUrl}?fields=*.*&filter={"colaboradores":{"_contains":"${username}"}}`);
+        const config = {
+            headers: this.getAuthHeader(),
+        };
+        const response = await axios_1.default.get(`${this.baseUrl}?fields=*.*&filter={"colaboradores":{"_contains":"${username}"}}`, config);
         return response.data;
     }
     async getTimeByProject(id) {
-        const response = await axios_1.default.get(`${this.baseUrl}/${id}?fields=time`);
+        const config = {
+            headers: this.getAuthHeader(),
+        };
+        const response = await axios_1.default.get(`${this.baseUrl}/${id}?fields=time`, config);
         return response.data;
     }
-    async UpdateTimeByProject(id, updateRepoDto) {
-        const response = await axios_1.default.patch(`${this.baseUrl}/${id}?fields=time`, updateRepoDto);
+    async updateTimeByProject(id, updateRepoDto) {
+        const config = {
+            headers: this.getAuthHeader(),
+        };
+        const response = await axios_1.default.patch(`${this.baseUrl}/${id}?fields=time`, updateRepoDto, config);
         return response.data;
     }
     async getCollaboratorByRepo(id) {
-        const response = await axios_1.default.get(`${this.baseUrl}/${id}?fields=colaboradores`);
+        const config = {
+            headers: this.getAuthHeader(),
+        };
+        const response = await axios_1.default.get(`${this.baseUrl}/${id}?fields=colaboradores`, config);
         return response.data;
     }
-    async UpdateCollaboratorByRepo(id, updateRepoDto) {
-        const response = await axios_1.default.patch(`${this.baseUrl}/${id}?fields=colaboradores`, updateRepoDto);
+    async updateCollaboratorByRepo(id, updateRepoDto) {
+        const config = {
+            headers: this.getAuthHeader(),
+        };
+        const response = await axios_1.default.patch(`${this.baseUrl}/${id}?fields=colaboradores`, updateRepoDto, config);
         return response.data;
     }
     async getClientsByRepo(id) {
-        const response = await axios_1.default.get(`${this.baseUrl}/${id}?fields=cliente`);
+        const config = {
+            headers: this.getAuthHeader(),
+        };
+        const response = await axios_1.default.get(`${this.baseUrl}/${id}?fields=cliente`, config);
         return response.data;
     }
-    async UpdateClientByRepo(id, updateRepoDto) {
-        const response = await axios_1.default.patch(`${this.baseUrl}/${id}?fields=cliente`, updateRepoDto);
+    async updateClientByRepo(id, updateRepoDto) {
+        const config = {
+            headers: this.getAuthHeader(),
+        };
+        const response = await axios_1.default.patch(`${this.baseUrl}/${id}?fields=cliente`, updateRepoDto, config);
         return response.data;
     }
 };
@@ -81,7 +122,7 @@ __decorate([
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [String, update_repo_dto_1.UpdateRepoDto]),
     __metadata("design:returntype", Promise)
-], RepoService.prototype, "UpdateClientByRepo", null);
+], RepoService.prototype, "updateClientByRepo", null);
 exports.RepoService = RepoService = __decorate([
     (0, common_1.Injectable)()
 ], RepoService);

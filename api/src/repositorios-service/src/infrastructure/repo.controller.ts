@@ -108,7 +108,7 @@ export class RepoController {
     @Param("id") id: string,
     @Body() updateRepoDto: UpdateRepoDto
   ) {
-    return this.repoService.UpdateTimeByProject(id, updateRepoDto);
+    return this.repoService.updateTimeByProject(id, updateRepoDto);
   }
 
   @Get("colaborador/project/:id")
@@ -135,7 +135,7 @@ export class RepoController {
     @Param("id") id: string,
     @Body() updateRepoDto: UpdateRepoDto
   ) {
-    return this.repoService.UpdateCollaboratorByRepo(id, updateRepoDto);
+    return this.repoService.updateCollaboratorByRepo(id, updateRepoDto);
   }
 
   @Get("cliente/project/:id")
@@ -162,6 +162,6 @@ export class RepoController {
     @Param("id") id: string,
     @Body() updateRepoDto: UpdateRepoDto
   ) {
-    return this.repoService.UpdateClientByRepo(id, updateRepoDto);
+    return this.repoService.updateClientByRepo(id, updateRepoDto);
   }
 }

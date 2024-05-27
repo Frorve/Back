@@ -10,29 +10,49 @@ exports.ClientsService = void 0;
 const common_1 = require("@nestjs/common");
 const axios_1 = require("axios");
 const dotenv = require("dotenv");
+const global_service_1 = require("../../../directus/src/application/global.service");
 dotenv.config({ path: ".develop.env" });
 let ClientsService = class ClientsService {
     constructor() {
         this.baseUrl = `${process.env.DIRECTUS_URL_CLIENTS}`;
     }
+    getAuthHeader() {
+        const token = global_service_1.GlobalService.token;
+        return { Authorization: `Bearer ${token}` };
+    }
     async findAll() {
-        const response = await axios_1.default.get(this.baseUrl);
+        const config = {
+            headers: this.getAuthHeader(),
+        };
+        const response = await axios_1.default.get(this.baseUrl, config);
         return response.data;
     }
     async create(createClienteDto) {
-        const response = await axios_1.default.post(this.baseUrl, createClienteDto);
+        const config = {
+            headers: this.getAuthHeader(),
+        };
+        const response = await axios_1.default.post(this.baseUrl, createClienteDto, config);
         return response.data;
     }
     async update(id, updateClienteDto) {
-        const response = await axios_1.default.patch(`${this.baseUrl}/${id}`, updateClienteDto);
+        const config = {
+            headers: this.getAuthHeader(),
+        };
+        const response = await axios_1.default.patch(`${this.baseUrl}/${id}`, updateClienteDto, config);
         return response.data;
     }
     async delete(id) {
-        const response = await axios_1.default.delete(`${this.baseUrl}/${id}`);
+        const config = {
+            headers: this.getAuthHeader(),
+        };
+        const response = await axios_1.default.delete(`${this.baseUrl}/${id}`, config);
         return response.data;
     }
     async findAllByName() {
-        const response = await axios_1.default.get(`${this.baseUrl}?fields=nombre`);
+        const config = {
+            headers: this.getAuthHeader(),
+        };
+        const response = await axios_1.default.get(`${this.baseUrl}?fields=nombre`, config);
         return response.data;
     }
 };

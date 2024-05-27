@@ -10,11 +10,9 @@ exports.DirectusService = void 0;
 const common_1 = require("@nestjs/common");
 let DirectusService = class DirectusService {
     setToken(token) {
-        console.log('Setting token in DirectusService:', token);
         this.token = token;
     }
     getToken() {
-        console.log('Getting token from DirectusService:', this.token);
         return this.token;
     }
 };
